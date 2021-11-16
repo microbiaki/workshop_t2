@@ -38,17 +38,16 @@ opts_chunk$set(echo=FALSE,
 
 We will use the [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/) dataset. Data were collected and made available by Dr. Kristen Gorman and the Palmer Station, Antarctica LTER, a member of the Long Term Ecological Research Network.
 
-```{r penguins, echo =TRUE}
+```{r check penguins, echo=TRUE}
+head(penguins) #check table structure
+```
+
+```{r summarize penguins, echo =TRUE}
 library(palmerpenguins) # load the penguins dataset
-summary(penguins) #summazize data
+summary(penguins) #summatize data
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
