@@ -79,3 +79,80 @@ library(ggpubr)
 ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g))+geom_point()+ geom_smooth(method="lm") + stat_regline_equation(label.y = 6000, aes(label = ..eq.label..)) + stat_regline_equation(label.y = 5600, aes(label = ..rr.label..))
 ```
 
+Are there any differences between the species?
+```{r plot body mass vs flipper length and trendline in the different species, echo =TRUE}
+
+
+ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+geom_point()+ geom_smooth(method="lm")
+
+#regression equations will overlap, we will use faceting for them
+```
+
+## Themes
+Let's try changing themes in other type of plot, histograms. Let's plot the distribution of the flipper length for each species. We will use my favourite theme: them_bw()
+
+https://r-charts.com/ggplot2/themes/
+
+```{r histogram bw_theme, echo =TRUE}
+
+ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
+  geom_histogram(alpha=0.6, position="identity")+theme_bw()
+
+```
+
+
+```{r histogram , echo =TRUE}
+
+ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
+  geom_histogram(alpha=0.6, position="identity")+theme_classic2()
+
+```
+
+Themes can be modified
+
+### Labels
+
+### Axis
+
+### Legends
+
+
+## Barplot
+
+
+## Boxplots
+```{r plot flipper length distribution distributio in the different species and sexes, echo =TRUE}
+
+
+ggplot(penguins, aes(x=species, y=flipper_length_mm, fill=sex))+geom_boxplot()+ theme_bw()
+
+#regression equations will overlap, we will use faceting for them
+```
+
+```{r plot flipper length distribution distributio in the different species and sexes omitNA, echo =TRUE}
+
+
+ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+geom_boxplot()+ theme_bw()
+
+```
+
+```{r plot body flipper length distribution in the different species add ind observations, echo =TRUE}
+
+
+ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+geom_boxplot()+geom_jitter(color="black", size=0.4, alpha=0.9) + theme_bw()
+
+```
+
+## Violinplots
+
+```{r plot flipper length distribution in the different species using violin, echo =TRUE}
+
+
+ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+geom_violin()+ theme_bw()
+
+```
+
+## Faceting
+
+
+
