@@ -36,7 +36,9 @@ opts_chunk$set(echo=FALSE,
 # Explore different types of plots in ggplot2
 ggplot2 BLURB
 
-##Dataset
+## Required packages
+
+## Dataset
 
 We will use the [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/) dataset. Data were collected and made available by Dr. Kristen Gorman and the Palmer Station, Antarctica LTER, a member of the Long Term Ecological Research Network.
 
@@ -74,6 +76,6 @@ Let's add a tredline together with the equation
 
 library(ggpubr)
 
-ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g))+geom_point()+ geom_smooth(method="lm") + stat_regline_equation(label.y = 400, aes(label = ..eq.label..)) + stat_regline_equation(label.y = 350, aes(label = ..rr.label..))
+ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g))+geom_point()+ geom_smooth(method="lm") + stat_regline_equation(label.y = 6000, aes(label = ..eq.label..)) + stat_regline_equation(label.y = 5600, aes(label = ..rr.label..))
 ```
 
