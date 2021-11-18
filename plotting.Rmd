@@ -112,22 +112,63 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
 ```
 
 
-```{r histogram , echo =TRUE}
+```{r histogram void theme, echo =TRUE}
 
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
-  geom_histogram(alpha=0.6, position="identity")+theme_classic2()
+  geom_histogram(alpha=0.6, position="identity")+
+  theme_void()
 
 ```
 
 Themes can be modified
 
 ### Labels
+```{r histogram bw_theme modify labels, echo =TRUE}
+
+ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
+  geom_histogram(alpha=0.6, position="identity")+
+  theme_bw() +
+  labs(x = "Flipper length (mm)", y = "Counts")+
+  theme(axis.title.x = element_text(color = "black", face = "bold", size = 14),
+        axis.title.y = element_text(color = "black", face = "bold", size = 14))
+  
+
+```
 
 ### Axis
 
+```{r histogram modify axis , echo =TRUE}
+
+ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
+  geom_histogram(alpha=0.6, position="identity")+theme_bw()+
+  labs(x = "Flipper length (mm)", y = "Counts")+
+  #modify axis font size
+  theme(axis.text.x = element_text(color = "black", size = 12),
+        axis.text.y = element_text(color = "black", size = 12),
+        axis.title.x = element_text(color = "black", face = "bold", size = 14),
+        axis.title.y = element_text(color = "black", face = "bold", size = 14))
+ 
+
+```
+
 ### Legends
 
+```{r histogram modify legends , echo =TRUE}
 
+ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
+  geom_histogram(alpha=0.6, position="identity")+
+  theme_bw()+
+  labs(x = "Flipper length (mm)", y = "Counts", fill="Species")+
+  theme(axis.text.x = element_text(color = "black", size = 12),
+        axis.text.y = element_text(color = "black", size = 12),
+        axis.title.x = element_text(color = "black", face = "bold", size = 14),
+        axis.title.y = element_text(color = "black", face = "bold", size = 14),
+        legend.title=element_text(color = "black", face = "bold", size=14), 
+        legend.text=element_text(size=12))
+
+ 
+
+```
 ## Barplot
 
 
@@ -135,22 +176,43 @@ Themes can be modified
 ```{r plot flipper length distribution distributio in the different species and sexes, echo =TRUE}
 
 
-ggplot(penguins, aes(x=species, y=flipper_length_mm, fill=sex))+geom_boxplot()+ theme_bw()
+ggplot(penguins, aes(x=species, y=flipper_length_mm, fill=sex))+
+  geom_boxplot()+ 
+  theme_bw()+
+  labs(x = "Species", y = "Flipper length (mm)")+
+  theme(axis.text.x = element_text(color = "black", size = 12),
+        axis.text.y = element_text(color = "black", size = 12),
+        axis.title.x = element_text(color = "black", face = "bold", size = 14),
+        axis.title.y = element_text(color = "black", face = "bold", size = 14))
+ 
 
-#regression equations will overlap, we will use faceting for them
 ```
 
 ```{r plot flipper length distribution distributio in the different species and sexes omitNA, echo =TRUE}
 
 
-ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+geom_boxplot()+ theme_bw()
-
+ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
+  geom_boxplot()+ 
+  theme_bw()+
+  labs(x = "Species", y = "Flipper length (mm)")+
+  theme(axis.text.x = element_text(color = "black", size = 12),
+        axis.text.y = element_text(color = "black", size = 12),
+        axis.title.x = element_text(color = "black", face = "bold", size = 14),
+        axis.title.y = element_text(color = "black", face = "bold", size = 14))
 ```
 
 ```{r plot body flipper length distribution in the different species add ind observations, echo =TRUE}
 
 
-ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+geom_boxplot()+geom_jitter(color="black", size=0.4, alpha=0.9) + theme_bw()
+ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
+  geom_boxplot()+
+  geom_jitter(color="black", size=0.4, alpha=0.9) + 
+  theme_bw()+
+  labs(x = "Species", y = "Flipper length (mm)")+
+  theme(axis.text.x = element_text(color = "black", size = 12),
+        axis.text.y = element_text(color = "black", size = 12),
+        axis.title.x = element_text(color = "black", face = "bold", size = 14),
+        axis.title.y = element_text(color = "black", face = "bold", size = 14))
 
 ```
 
@@ -159,7 +221,14 @@ ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+geom_bo
 ```{r plot flipper length distribution in the different species using violin, echo =TRUE}
 
 
-ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+geom_violin()+ theme_bw()
+ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
+  geom_violin()+ 
+  theme_bw()+
+  labs(x = "Species", y = "Flipper length (mm)")+
+  theme(axis.text.x = element_text(color = "black", size = 12),
+        axis.text.y = element_text(color = "black", size = 12),
+        axis.title.x = element_text(color = "black", face = "bold", size = 14),
+        axis.title.y = element_text(color = "black", face = "bold", size = 14))
 
 ```
 
@@ -167,7 +236,15 @@ ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+geom_vi
 ```{r as above overlaying boxplot, echo =TRUE}
 
 
-ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+geom_violin()+geom_boxplot(position=position_dodge(width=0.9), width=0.2) +theme_bw()
+ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
+  geom_violin()+
+  geom_boxplot(position=position_dodge(width=0.9), width=0.2) +
+  theme_bw()+
+  labs(x = "Species", y = "Flipper length (mm)")+
+  theme(axis.text.x = element_text(color = "black", size = 12),
+        axis.text.y = element_text(color = "black", size = 12),
+        axis.title.x = element_text(color = "black", face = "bold", size = 14),
+        axis.title.y = element_text(color = "black", face = "bold", size = 14))
 ```
 
 ```
