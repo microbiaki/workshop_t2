@@ -38,7 +38,9 @@ ggplot2 BLURB
 
 ## Required packages
 Install the following packages:
-palmerpenguins
+- palmerpenguin
+- tidyvers
+- ggpubr
 
 
 ## Dataset
@@ -67,7 +69,7 @@ library(tidyverse) # load the tidyverse package; contains ggplot2
 ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g))+geom_point()
 ```
 
-Let's add a tredline
+Let's add a trendline
 ```{r plot body mass vs flipper length and trendline, echo =TRUE}
 
 
