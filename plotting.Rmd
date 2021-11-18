@@ -163,6 +163,15 @@ ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+geom_vi
 
 ```
 
+
+```{r as above overlaying boxplot, echo =TRUE}
+
+
+ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+geom_violin()+geom_boxplot(position=position_dodge(width=0.9), width=0.2) +theme_bw()
+```
+
+```
+
 ## Faceting
 
 
