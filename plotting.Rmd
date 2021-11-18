@@ -85,18 +85,16 @@ ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g))+geom_point()+ geom_smo
 Are there any differences between the species?
 ```{r plot body mass vs flipper length and trendline in the different species, echo =TRUE}
 
-
+#regression equations will overlap, we will use faceting for them
 ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+geom_point()+ geom_smooth(method="lm")
 
-#regression equations will overlap, we will use faceting for them
 ```
 
-```{r as above but use different shapes for the sexes, echo =TRUE}
+```{r use different shapes for the sexes, echo =TRUE}
 
 
-ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+geom_point(aes(shape=factor(sex)))+ geom_smooth(method="lm")
+ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+geom_point(aes(shape=sex))
 
-#regression equations will overlap, we will use faceting for them
 ```
 
 ## Themes
@@ -247,7 +245,7 @@ ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
 ```
 
 
-```
+
 
 ## Faceting
 
@@ -260,7 +258,5 @@ ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
 ```{plotly, echo =TRUE}
 
 install.packages("plotly")
+
 ```
-
-
-
