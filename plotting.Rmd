@@ -84,7 +84,6 @@ ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g))+geom_point()+ geom_smo
 
 Are there any differences between the species?
 ```{r plot body mass vs flipper length and trendline in the different species, echo =TRUE}
-
 #regression equations will overlap, we will use faceting for them
 ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+geom_point()+ geom_smooth(method="lm")
 
@@ -98,6 +97,7 @@ ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+geom_po
 ```
 
 ## Themes
+There are [built in ggplot themes](https://ggplot2.tidyverse.org/reference/ggtheme.html) or there is a long list of cosmetic changes you can make with [theme()](https://ggplot2.tidyverse.org/reference/theme.html).
 Let's try changing themes in other type of plot, histograms. Let's plot the distribution of the flipper length for each species. We will use my favourite theme: them_bw()
 
 https://r-charts.com/ggplot2/themes/
@@ -147,6 +147,40 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
  
 
 ```
+You can also change the color, angle, and justification of the axis labels.
+
+```{r histogram further modify axis, echo =TRUE}
+#modify axis font size
+ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
+  geom_histogram(alpha=0.6, position="identity")+theme_bw()+
+  labs(x = "Flipper length (mm)", y = "Counts")+
+  theme(axis.text.x = element_text(color = "black", size = 12, angle = 45),
+        axis.text.y = element_text(color = "black", size = 12),
+        axis.title.x = element_text(color = "grey30", face = "bold", size = 14),
+        axis.title.y = element_text(color = "grey30", face = "bold", size = 14))
+ 
+
+```
+
+The horizontal or vertical justification, (*hjust* and *vjust*) can also be adjusted. This hjust and vjust argument can be best explained using this figure [[Source from Stackoverflow](https://stackoverflow.com/questions/7263849/what-do-hjust-and-vjust-do-when-making-a-plot-using-ggplot)]:
+
+```{r out.width ="50%", echo=FALSE}
+knitr::include_graphics("figures-images/hjust-vjust.png")
+```
+
+e.g.:
+```{r histogram further modify axis adjust, echo =TRUE}
+ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
+  geom_histogram(alpha=0.6, position="identity")+theme_bw()+
+  labs(x = "Flipper length (mm)", y = "Counts")+
+  theme(axis.text.x = element_text(color = "black", size = 12, angle = 45, hjust = 1, vjust = 1),
+        axis.text.y = element_text(color = "black", size = 12),
+        axis.title.x = element_text(color = "grey30", face = "bold", size = 14),
+        axis.title.y = element_text(color = "grey30", face = "bold", size = 14))
+ 
+
+```
+
 
 ### Legends
 
@@ -166,6 +200,10 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
  
 
 ```
+
+
+###Colors
+
 ## Barplot
 
 
@@ -255,8 +293,8 @@ ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
 
 # Plot interactively with plotly or dygraphs
 
-```{plotly, echo =TRUE}
+```{r plotly, echo =TRUE}
 
-install.packages("plotly")
+library(plotly)
 
 ```
