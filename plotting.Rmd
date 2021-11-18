@@ -37,6 +37,9 @@ opts_chunk$set(echo=FALSE,
 ggplot2 BLURB
 
 ## Required packages
+Install the following packages:
+palmerpenguins
+
 
 ## Dataset
 
@@ -45,12 +48,12 @@ We will use the [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/)
 We will briefly check the datastructure before we start plotting.
 
 ```{r check penguins, echo=TRUE}
+library(palmerpenguins) # load palmerpenguins dataset
 head(penguins) #check table structure
 ```
 
 ```{r summarize penguins, echo =TRUE}
-library(palmerpenguins) # load the penguins dataset
-summary(penguins) #summatize data
+summary(penguins)  #summarize data
 ```
 
 As we can see from the summary table three different species of penguins were recorded in three different islands.
@@ -59,7 +62,7 @@ As we can see from the summary table three different species of penguins were re
 Let's explore if there is a correlation between the body mass of the penguins and the flipper length
 
 ```{r plot body mass vs flipper length, echo =TRUE}
-library(tidyverse) # load the tiverse package
+library(tidyverse) # load the tidyverse package; contains ggplot2
 
 ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g))+geom_point()
 ```
@@ -71,10 +74,10 @@ Let's add a tredline
 ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g))+geom_point()+ geom_smooth(method="lm") 
 ```
 
-Let's add a tredline together with the equation 
+Let's add a trendline together with the equation 
 ```{r plot body mass vs flipper length and trendline and equation, echo =TRUE}
 
-library(ggpubr)
+library(ggpubr) #package the facilitates the display of the equation
 
 ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g))+geom_point()+ geom_smooth(method="lm") + stat_regline_equation(label.y = 6000, aes(label = ..eq.label..)) + stat_regline_equation(label.y = 5600, aes(label = ..rr.label..))
 ```
@@ -84,6 +87,14 @@ Are there any differences between the species?
 
 
 ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+geom_point()+ geom_smooth(method="lm")
+
+#regression equations will overlap, we will use faceting for them
+```
+
+```{r as above but use different shapes for the sexes, echo =TRUE}
+
+
+ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+geom_point(aes(shape=factor(sex)))+ geom_smooth(method="lm")
 
 #regression equations will overlap, we will use faceting for them
 ```
@@ -153,6 +164,17 @@ ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+geom_vi
 ```
 
 ## Faceting
+
+
+## Colors
+
+
+# Plot interactively with plotly or dygraphs
+
+```{plotly, echo =TRUE}
+
+install.packages("plotly")
+```
 
 
 
