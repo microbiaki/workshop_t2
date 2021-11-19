@@ -36,13 +36,14 @@ opts_chunk$set(echo=FALSE,
 ```
 
 # Explore different types of plots in ggplot2
-ggplot2 BLURB
+ggplot2 is an R package for creating graphics based on The Grammar of Graphics^[Leland Wilkinson. The Grammar of Graphics (Statistics and Computing) 2nd Edition]. ADD Brett's blurb (Data + Mapping-layer,scales,coord, facet, theme )
 
 ## Required packages
-Install the following packages:
+Make sure that you have the following packages installed:
 `palmerpenguin`
 `tidyverse`
 `ggpubr`
+ADD REST
 
 
 ## Dataset
