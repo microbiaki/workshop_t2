@@ -47,7 +47,6 @@ ADD REST
 
 
 ## Dataset
-
 We will use the [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/) dataset. Data were collected and made available by Dr. Kristen Gorman and the Palmer Station, Antarctica LTER, a member of the Long Term Ecological Research Network.
 
 We will briefly check the datastructure before we start plotting.
@@ -62,6 +61,8 @@ summary(penguins)  #summarize data
 ```
 
 As we can see from the summary table three different species of penguins were recorded in three different islands.
+![alt penguins](figures-images/penguins.png)
+
 
 ## Scatterplot
 Let's explore if there is a correlation between the body mass of the penguins and the flipper length
