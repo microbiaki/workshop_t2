@@ -3,12 +3,14 @@ title: "Plotting in R"
 author: "Maria Pachiadaki"
 date: "11/16/2021"
 output:
-  rmdformats::downcute:
+  rmdformats::robobook:
     self_contained: true
     thumbnails: false
     lightbox: true
     gallery: false
-    highlight: tango
+    fig_width: 10
+    
+    
     
 knit: (function(input_file, encoding) {
   out_dir <- '.';
@@ -38,9 +40,9 @@ ggplot2 BLURB
 
 ## Required packages
 Install the following packages:
-- palmerpenguin
-- tidyvers
-- ggpubr
+`palmerpenguin`
+`tidyverse`
+`ggpubr`
 
 
 ## Dataset
@@ -66,14 +68,16 @@ Let's explore if there is a correlation between the body mass of the penguins an
 ```{r plot body mass vs flipper length, echo =TRUE}
 library(tidyverse) # load the tidyverse package; contains ggplot2
 
-ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g))+geom_point()
+ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g))+
+  geom_point()
 ```
 
 Let's add a trendline
 ```{r plot body mass vs flipper length and trendline, echo =TRUE}
 
-
-ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g))+geom_point()+ geom_smooth(method="lm") 
+ggplot(penguins, aes(x=flipper_length_mm,y=body_mass_g))+
+  geom_point()+ 
+  geom_smooth(method="lm") 
 ```
 
 Let's add a trendline together with the equation 
@@ -81,22 +85,65 @@ Let's add a trendline together with the equation
 
 library(ggpubr) #package the facilitates the display of the equation
 
-ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g))+geom_point()+ geom_smooth(method="lm") + stat_regline_equation(label.y = 6000, aes(label = ..eq.label..)) + stat_regline_equation(label.y = 5600, aes(label = ..rr.label..))
+ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g))+
+  geom_point()+ 
+  geom_smooth(method="lm") + 
+  stat_regline_equation(label.y = 6000, aes(label = ..eq.label..)) + 
+  stat_regline_equation(label.y = 5600, aes(label = ..rr.label..))
 ```
 
 Are there any differences between the species?
 ```{r plot body mass vs flipper length and trendline in the different species, echo =TRUE}
 #regression equations will overlap, we will use faceting for them
-ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+geom_point()+ geom_smooth(method="lm")
+ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+
+  geom_point()+ 
+  geom_smooth(method="lm")
 
 ```
 
 ```{r use different shapes for the sexes, echo =TRUE}
 
 
-ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+geom_point(aes(shape=sex))
+ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+
+  geom_point(aes(shape=sex))
 
 ```
+
+
+```{r, print shapes}
+# Show a list of available shapes
+df_shapes <- data.frame(shape = 0:24)
+ggplot(df_shapes, aes(0, 0, shape = shape)) +
+  geom_point(aes(shape = shape), size = 5, fill = 'red') +
+  scale_shape_identity() +
+  facet_wrap(~shape) +
+  theme_void()
+```
+
+Change point size
+```{r flipper length, bill_length_mm, bodymass, different shapes for the sexes and, echo =TRUE}
+
+
+ggplot(penguins, aes(x=flipper_length_mm, y=bill_length_mm, color=species))+
+  geom_point(aes(shape=sex, size=body_mass_g))
+
+```
+
+## Faceting
+
+
+```{r plot body mass vs flipper length and trendline in the different species faceting, echo =TRUE}
+#regression equations will overlap, we will use faceting for them
+ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+
+  geom_point(aes(shape=sex))+
+  facet_wrap(~species, scales="free_x")+
+  geom_smooth(method="lm", se=FALSE)+
+  stat_regline_equation(label.y = 6000, aes(label = ..eq.label..)) + 
+  stat_regline_equation(label.y = 5800, aes(label = ..rr.label..))
+  
+
+```
+
 
 ## Themes
 There are [built in ggplot themes](https://ggplot2.tidyverse.org/reference/ggtheme.html) or there is a long list of cosmetic changes you can make with [theme()](https://ggplot2.tidyverse.org/reference/theme.html).
@@ -107,7 +154,8 @@ https://r-charts.com/ggplot2/themes/
 ```{r histogram bw_theme, echo =TRUE}
 
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
-  geom_histogram(alpha=0.6, position="identity")+theme_bw()
+  geom_histogram(alpha=0.6, position="identity")+
+  theme_bw()
 
 ```
 
@@ -119,7 +167,6 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
   theme_void()
 
 ```
-
 Themes can be modified
 
 ### Labels
@@ -285,18 +332,138 @@ ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
 ```
 
 
-
-
-## Faceting
-
-
 ## Colors
 
 
 # Plot interactively with plotly or dygraphs
 
-```{r plotly, echo =TRUE}
+##Dataset
+The following material is from XXX
+
+### Get URL to CSV
+Please visit the ERDDAP server [https://oceanview.pfeg.noaa.gov/erddap](oceanview.pfeg.noaa.gov/erddap) and please do a *Full Text Search for Datasets* using "cciea" in the text box before clicking **Search**. These are all the California Current IEA datasets.
+From the listing of datasets, please click on [**data**](https://oceanview.pfeg.noaa.gov/erddap/tabledap/cciea_AC.html) for the "CCIEA Anthropogenic Drivers" dataset. Note the filtering options for `time` and other variables like `consumption_fish (Millions of metric tons)` and `cps_landings_coastwide (1000s metric tons)`. Set the time filter from being only the most recent time to the entire range of available time from `1945-01-01` to `2020-01-01`.
+Scroll to the bottom and **Submit** with the default `.htmlTable` view. You get an web table of the data. Notice the many missing values in earlier years.
+Go back in your browser to change the the **File type** to `.csv`. Now instead of clicking Submit, click on **Just generate the URL**. Although the generated URL lists all variables to include, the default is to do that, so we can strip off everything after the `.csv`, starting with the query parameters `?` .
+
+
+### Download CSV
+Let's use this URL to download a new file
+```{r, echo =TRUE}
+# set variables
+csv_url  <- "https://oceanview.pfeg.noaa.gov/erddap/tabledap/cciea_AC.csv"
+# if ERDDAP server down (Error in download.file) with URL above, use this:
+#    csv_url <- "https://raw.githubusercontent.com/noaa-iea/r3-train/master/data/cciea_AC.csv"
+dir_data <- "data"
+# derived variables
+csv <- file.path(dir_data, basename(csv_url))
+# create directory
+dir.create(dir_data, showWarnings = F)
+# download file
+if (!file.exists(csv))
+  download.file(csv_url, csv)
+```
+
+### Read table `read.csv()`
+Now open the file by going into the **Files** RStudio pane, **More** -\> **Show Folder in New Window**. Then double click on `data/cciea_AC.csv` to open in your Spreadsheet program (like Microsoft Excel or Apple Pages or LibreOffice Calc). 
+
+```md
+### Read table `read.csv()`
+```
+
+```{r, echo =TRUE, results='hide'}
+# attempt to read csv
+d <- read.csv(csv)
+# show the data frame
+d
+```
+Note how the presence of the 2nd line with units makes the values character `<chr>` data type. 
+But we want numeric values. So we could manually delete that second line of units or look at the **help** documentation for this function (`?read.csv` in Console pane; or `F1` key with cursor on the function in the code editor pane). Notice the `skip` argument, which we can implement like so:
+```{r, echo =TRUE, results='hide'}
+# read csv by skipping first two lines, so no header
+d <- read.csv(csv, skip = 2, header = FALSE)
+
+# update data frame to original column names
+names(d) <- names(read.csv(csv))
+
+#fix year
+d$time<-sub("-.+", "", d$time) 
+
+d$time<-as.numeric(d$time)
+# update for future reuse (NEW!)
+write.csv(d, csv, row.names = F)
+```
+
+```{r, echo= TRUE, results='hide'}
+head(d)
+```
+### Series line plot `aes(color = region)`
+
+Next, let's also show the other regional values (`CA`, `OR` and `WA`; not `coastwide`) in the plot as a series with different colors. To do this, we'll want to **tidy** the data into _long_ format so we can have a column for `total_fisheries_revenue` and another `region` column to supply as the `group` and `color` aesthetics based on aesthetics we see are available for `geom_line()`:
+
+```{r plot , echo=TRUE, fig.height = 4, fig.width = 10}
+d_rgn <- d %>% 
+  # select columns
+  select(
+    time, 
+    starts_with("total_fisheries_revenue")) %>% 
+  # exclude column
+  select(-total_fisheries_revenue_coastwide) %>% 
+  # pivot longer
+  pivot_longer(-time) %>% 
+  # mutate region by stripping other
+  mutate(
+    region = name %>% 
+      str_replace("total_fisheries_revenue_", "") %>% 
+      str_to_upper()) %>% 
+  # filter for not NA
+  filter(!is.na(value)) %>% 
+  # select columns
+  select(time, region, value)
+  
+# create plot object
+p_rgn <- ggplot(
+  d_rgn,
+  # aesthetics
+  aes(x= time, y = value, group = region, color = region))+
+    theme_bw()+
+    labs(x = "Year", y = "Millions $")+
+    theme(axis.text.x = element_text(color = "black", size = 12, angle = 45, hjust = 1, vjust = 1),
+        axis.text.y = element_text(color = "black", size = 12),
+        axis.title.x = element_text(color = "grey30", face = "bold", size = 14),
+        axis.title.y = element_text(color = "grey30", face = "bold", size = 14))+
+  # geometry
+  geom_line()
+# show plot
+p_rgn
+```
+
+When rendering to HTML, you can render most `ggplot` objects interactively with [`plotly::ggplotly()`](https://plotly.com/ggplot2). The `plotly` library is an R [htmlwidget](http://www.htmlwidgets.org) providing simple R functions to render interactive JavaScript visualizations.
+
+
+```{r plotly, echo =TRUE, fig.height = 4.5, fig.width = 9}
 
 library(plotly)
+plotly::ggplotly(p_rgn)
 
 ```
+
+### Create interactive time series with `dygraphs::dygraph()`
+
+Another htmlwidget plotting library written more specifically for time series data is [`dygraphs`](https://rstudio.github.io/dygraphs). Unlike the ggplot2 data input, a series is expected in _wide_ (not tidy _long_) format. So we use tidyr's `pivot_wider()` first.
+
+#```{r}
+#library(dygraphs)
+#d_rgn_wide <- d_rgn %>% 
+#  mutate(
+#    Year = time) %>% 
+#  select(Year, region, value) %>% 
+#  pivot_wider(
+#    names_from  = region,
+#    values_from = value)
+#datatable(d_rgn_wide)
+
+#d_rgn_wide %>% 
+#  dygraph() %>% 
+#  dyRangeSelector()
+#```
