@@ -343,8 +343,8 @@ ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
 The following material is from XXX
 
 ### Get URL to CSV
-Please visit the ERDDAP server [https://oceanview.pfeg.noaa.gov/erddap](oceanview.pfeg.noaa.gov/erddap) and please do a *Full Text Search for Datasets* using "cciea" in the text box before clicking **Search**. These are all the California Current IEA datasets.
-From the listing of datasets, please click on [**data**](https://oceanview.pfeg.noaa.gov/erddap/tabledap/cciea_AC.html) for the "CCIEA Anthropogenic Drivers" dataset. Note the filtering options for `time` and other variables like `consumption_fish (Millions of metric tons)` and `cps_landings_coastwide (1000s metric tons)`. Set the time filter from being only the most recent time to the entire range of available time from `1945-01-01` to `2020-01-01`.
+Visit the ERDDAP server [https://oceanview.pfeg.noaa.gov/erddap](https://oceanview.pfeg.noaa.gov/erddap) and do a *Full Text Search for Datasets* using "cciea" in the text box before clicking **Search**. These are all the California Current IEA datasets.
+From the listing of datasets, click on [**data**](https://oceanview.pfeg.noaa.gov/erddap/tabledap/cciea_AC.html) for the "CCIEA Anthropogenic Drivers" dataset. Note the filtering options for `time` and other variables like `consumption_fish (Millions of metric tons)` and `cps_landings_coastwide (1000s metric tons)`. Set the time filter from being only the most recent time to the entire range of available time from `1945-01-01` to `2020-01-01`.
 Scroll to the bottom and **Submit** with the default `.htmlTable` view. You get an web table of the data. Notice the many missing values in earlier years.
 Go back in your browser to change the the **File type** to `.csv`. Now instead of clicking Submit, click on **Just generate the URL**. Although the generated URL lists all variables to include, the default is to do that, so we can strip off everything after the `.csv`, starting with the query parameters `?` .
 
@@ -391,7 +391,7 @@ names(d) <- names(read.csv(csv))
 #fix year
 d$time<-sub("-.+", "", d$time) 
 
-d$time<-as.numeric(d$time)
+d$time<-as.integer(d$time)
 # update for future reuse (NEW!)
 write.csv(d, csv, row.names = F)
 ```
@@ -430,7 +430,7 @@ p_rgn <- ggplot(
   aes(x= time, y = value, group = region, color = region))+
     theme_bw()+
     labs(x = "Year", y = "Millions $")+
-    theme(axis.text.x = element_text(color = "black", size = 12, angle = 45, hjust = 1, vjust = 1),
+    theme(axis.text.x = element_text(color = "black", size = 12, hjust = 1, vjust = 1),
         axis.text.y = element_text(color = "black", size = 12),
         axis.title.x = element_text(color = "grey30", face = "bold", size = 14),
         axis.title.y = element_text(color = "grey30", face = "bold", size = 14))+
@@ -454,18 +454,18 @@ plotly::ggplotly(p_rgn)
 
 Another htmlwidget plotting library written more specifically for time series data is [`dygraphs`](https://rstudio.github.io/dygraphs). Unlike the ggplot2 data input, a series is expected in _wide_ (not tidy _long_) format. So we use tidyr's `pivot_wider()` first.
 
-#```{r}
-#library(dygraphs)
-#d_rgn_wide <- d_rgn %>% 
-#  mutate(
-#    Year = time) %>% 
-#  select(Year, region, value) %>% 
-#  pivot_wider(
-#    names_from  = region,
-#    values_from = value)
-#datatable(d_rgn_wide)
+```{r, modify table, echo=TRUE }
+library(dygraphs)
+library(DT)
+d_rgn_wide <- d_rgn %>% 
+mutate(Year = time) %>% 
+select(Year, region, value) %>% 
+pivot_wider(names_from  = region,values_from = value)
+datatable(d_rgn_wide)
 
-#d_rgn_wide %>% 
-#  dygraph() %>% 
-#  dyRangeSelector()
-#```
+d_rgn_wide %>% 
+dygraph() %>% 
+dyRangeSelector()
+```
+
+
