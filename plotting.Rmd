@@ -53,7 +53,8 @@ We will briefly check the datastructure before we start plotting.
 
 ```{r check penguins, echo=TRUE}
 library(palmerpenguins) # load palmerpenguins dataset
-head(penguins) #check table structure
+library(DT)
+datatable(penguins) #check table structure
 ```
 
 ```{r summarize penguins, echo =TRUE}
@@ -355,7 +356,7 @@ Let's use this URL to download a new file
 # set variables
 csv_url  <- "https://oceanview.pfeg.noaa.gov/erddap/tabledap/cciea_AC.csv"
 # if ERDDAP server down (Error in download.file) with URL above, use this:
-#    csv_url <- "https://raw.githubusercontent.com/noaa-iea/r3-train/master/data/cciea_AC.csv"
+#    csv_url <- "https://raw.githubusercontent.com/microbiaki/workshop_t2/main/data/cciea_AC.csv"
 dir_data <- "data"
 # derived variables
 csv <- file.path(dir_data, basename(csv_url))
