@@ -403,7 +403,7 @@ head(d)
 
 Next, let's also show the other regional values (`CA`, `OR` and `WA`; not `coastwide`) in the plot as a series with different colors. To do this, we'll want to **tidy** the data into _long_ format so we can have a column for `total_fisheries_revenue` and another `region` column to supply as the `group` and `color` aesthetics based on aesthetics we see are available for `geom_line()`:
 
-```{r plot , echo=TRUE, fig.height = 4, fig.width = 10}
+```{r plot , echo=TRUE}
 d_rgn <- d %>% 
   # select columns
   select(
