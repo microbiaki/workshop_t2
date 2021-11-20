@@ -135,13 +135,21 @@ ggplot(penguins, aes(x=flipper_length_mm, y=bill_length_mm, color=species))+
 ## The Grammar of Graphics
 
 In the exploration of the `palmerpenguins` data, we started with a simple plot and added to i
-t. We added a linear model as a trendline, added model parameters to the plot, grouped the data by species, and changed things like point size and shape.
+t. We added a linear model as a trend line, added model parameters to the plot, grouped the data by species, and changed things like point size and shape.
 
 Starting with the first plot, we started by using the `ggplot()` function to create a ggplot object. As parameters, we told `ggplot()` we wanted to use `penguins` as data for the plot, and used the `aes()` function to define how we wanted to map the penguin data to the plot *aesthetics*. We mapped `flipper_length_mm` onto the x axis and `body_mass_g` onto the y axis.
 
 Next, we have to tell ggplot how we want to display the data. *Geoms* take mapped data and make it visible on the plot. `geom_point()` is a geom that (you guessed it) plots points. Note that we've added our first *layer* to the plot by sending the object created by `ggplot()` to `geom_point()` using the `+`. Why not use the pipe (`%>%`)? Ggplot was developed before the magrittr pipe, so `+` it is. This has made a lot of people very angry and been widely regarded as a bad move.
 
-Each addtional layer adds something to the plot or modifies the plot defaults.
+Layers are functions, so they take parameters that control what they do. For instance, when we used `geom_point()` as a layer to display available plot symbols above, we used this line:
+
+```{r, echo=TRUE, eval=FALSE}
+geom_point(aes(shape = shape), size = 5, fill = 'red')
+```
+
+This uses `aes()` to map `shape` from the data to the shape displayed. `size = 5` and `fill = 'red'` define the size and fill color of all points plotted. Assigning a constant to an aesthetic sets it for the entire geom, while mapping data to an aesthetic with `aes()` allows it to vary with the data mapped.
+
+Each additional layer adds something to the plot or modifies the plot defaults. We can add layers to add additional plots with the same or different data mapped to the plot aesthetics, modify the plot scales, change the coordinate system of the axes, change the theme of the plot, and break the plot into subplots by a categorical variable, which we'll look at next.
 
 ## Faceting
 
