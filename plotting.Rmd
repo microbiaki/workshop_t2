@@ -36,14 +36,14 @@ opts_chunk$set(echo=FALSE,
 ```
 
 # Explore different types of plots in ggplot2
-ggplot2 is an R package for creating graphics based on The Grammar of Graphics^[Leland Wilkinson. The Grammar of Graphics (Statistics and Computing) 2nd Edition]. The Grammar of Graphics is a language for talking about the different parts of a plot, and allow you to build plots creatively and iterively. ADD Brett's blurb (Data + Mapping-layer,scales,coord, facet, theme )
+ggplot2 is an R package for creating graphics based on The Grammar of Graphics^[Leland Wilkinson. The Grammar of Graphics (Statistics and Computing) 2nd Edition]. The Grammar of Graphics is a language for talking about the different parts of a plot, and allow you to build plots creatively and iterively.
 
 ## Required packages
 Make sure that you have the following packages installed:
 `palmerpenguin`
+`DT`
 `tidyverse`
 `ggpubr`
-ADD REST
 
 
 ## Dataset
@@ -134,8 +134,7 @@ ggplot(penguins, aes(x=flipper_length_mm, y=bill_length_mm, color=species))+
 
 ## The Grammar of Graphics
 
-In the exploration of the `palmerpenguins` data, we started with a simple plot and added to i
-t. We added a linear model as a trend line, added model parameters to the plot, grouped the data by species, and changed things like point size and shape.
+In the exploration of the `palmerpenguins` data, we started with a simple plot and added to it. We added a linear model as a trend line, added model parameters to the plot, grouped the data by species, and changed things like point size and shape.
 
 Starting with the first plot, we started by using the `ggplot()` function to create a ggplot object. As parameters, we told `ggplot()` we wanted to use `penguins` as data for the plot, and used the `aes()` function to define how we wanted to map the penguin data to the plot *aesthetics*. We mapped `flipper_length_mm` onto the x axis and `body_mass_g` onto the y axis.
 
@@ -169,8 +168,8 @@ ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+
 
 
 ## Themes
-There are [built in ggplot themes](https://ggplot2.tidyverse.org/reference/ggtheme.html) or there is a long list of cosmetic changes you can make with [theme()](https://ggplot2.tidyverse.org/reference/theme.html).
-Let's try changing themes in other type of plot, histograms. Let's plot the distribution of the flipper length for each species. We will use my favourite theme: them_bw()
+There are built in [ggplot themes](https://ggplot2.tidyverse.org/reference/ggtheme.html) and a long list of cosmetic changes you can make with [theme()](https://ggplot2.tidyverse.org/reference/theme.html).
+Let's try changing themes in other type of plot, histograms using `geom_histogram()`. Let's plot the distribution of the flipper length for each species. We will use my favourite theme: `them_bw()`.
 
 https://r-charts.com/ggplot2/themes/
 
