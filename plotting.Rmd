@@ -118,7 +118,7 @@ ggplot(df_shapes, aes(0, 0, shape = shape)) +
   facet_wrap(~shape) +
   theme_void()
 ```
-Shapes 32 to 127 correspond to the corresponding ASCII characters:
+Shapes 32 to 127 represent the corresponding ASCII characters:
 ```{r, print shapes 32 to 127}
 # Show a list of available shapes
 df_shapes <- data.frame(shape = 32:127)
@@ -170,6 +170,7 @@ ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+
   facet_grid(sex~species, scales="free_x")+
   geom_smooth(method="lm", se=FALSE)
 ```
+
 ## Themes
 There are built in-ggplot [themes](https://ggplot2.tidyverse.org/reference/ggtheme.html), as well as [theme packages](https://r-charts.com/ggplot2/themes/). There is a long list of cosmetic changes you can make with [theme()](https://ggplot2.tidyverse.org/reference/theme.html).
 Let's try changing themes in other type of plot, histograms using `geom_histogram()`. Let's plot the distribution of the flipper length for each species. We will use my favourite theme, `them_bw()`:
@@ -190,7 +191,7 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
 
 As we will see below, themes can be modified.
 
-### Labels
+## Labels
 Labels can be modified using `labs(x = "Title on x axis", y = "Title on y axis")`and `theme(axis.title.x = element_text(family, face, colour, size), axis.title.y = element_text(family, face, colour, size))`:
 ```{r histogram bw_theme modify labels, echo =TRUE}
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
