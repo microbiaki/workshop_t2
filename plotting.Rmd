@@ -272,8 +272,6 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
 
 ## Boxplots
 ```{r plot flipper length distribution distributio in the different species and sexes, echo =TRUE}
-
-
 ggplot(penguins, aes(x=species, y=flipper_length_mm, fill=sex))+
   geom_boxplot()+ 
   theme_bw()+
@@ -287,8 +285,6 @@ ggplot(penguins, aes(x=species, y=flipper_length_mm, fill=sex))+
 ```
 
 ```{r plot flipper length distribution distributio in the different species and sexes omitNA, echo =TRUE}
-
-
 ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
   geom_boxplot()+ 
   theme_bw()+
@@ -317,7 +313,6 @@ ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
 ## Violinplots
 
 ```{r plot flipper length distribution in the different species using violin, echo =TRUE}
-
 
 ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
   geom_violin()+ 
@@ -356,7 +351,7 @@ The following material is from XXX
 
 ### Get URL to CSV
 Visit the ERDDAP server [https://oceanview.pfeg.noaa.gov/erddap](https://oceanview.pfeg.noaa.gov/erddap) and do a *Full Text Search for Datasets* using "cciea" in the text box before clicking **Search**. These are all the California Current IEA datasets.
-From the listing of datasets, click on [**data**](https://oceanview.pfeg.noaa.gov/erddap/tabledap/cciea_AC.html) for the "CCIEA Anthropogenic Drivers" dataset. Note the filtering options for `time` and other variables like `consumption_fish (Millions of metric tons)` and `cps_landings_coastwide (1000s metric tons)`. Set the time filter from being only the most recent time to the entire range of available time from `1945-01-01` to `2020-01-01`.
+From the listing of datasets, click on [**data**](https://oceanview.pfeg.noaa.gov/erddap/tabledap/cciea_AC.html) for the "CCIEA Anthropogenic Drivers" dataset. Note the filtering options for `time` and other variables like `consumption_fish (Millions of metric tons)` and `cps_landings_coastwide (1000s metric tons)`. Set the time filter from being only the most recent time to the entire range of available time.
 Scroll to the bottom and **Submit** with the default `.htmlTable` view. You get an web table of the data. Notice the many missing values in earlier years.
 Go back in your browser to change the the **File type** to `.csv`. Now instead of clicking Submit, click on **Just generate the URL**. Although the generated URL lists all variables to include, the default is to do that, so we can strip off everything after the `.csv`, starting with the query parameters `?` .
 
