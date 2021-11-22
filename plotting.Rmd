@@ -49,14 +49,14 @@ Make sure that you have the following packages installed:
 ## Dataset
 We will use the [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/) dataset. Data were collected and made available by Dr. Kristen Gorman and the Palmer Station, Antarctica LTER, a member of the Long Term Ecological Research Network. Alison Horst gathered the data into an R package and is responsible for all the great penguin illustrations.
 
-We will briefly check the datastructure before we start plotting. Here I am using the [DT package](https://rstudio.github.io/DT/) which facilitates the display of dataframes, matrices or tibbles on HTLM pages.
-
+We will briefly check the structure of the data table (`penguins`) before we start plotting. Here I am using the `datatable` function from from [DT package](https://rstudio.github.io/DT/) which facilitates the display of dataframes, matrices or tibbles on HTLM pages.
 ```{r check penguins, echo=TRUE}
 library(palmerpenguins) # load palmerpenguins package
 library(DT)# load DT package
 datatable(penguins) #check table structure
 ```
 
+And summarize the penguins table using the `summary` function:
 ```{r summarize penguins, echo =TRUE}
 summary(penguins)  #summarize data
 ```
