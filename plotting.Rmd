@@ -66,7 +66,7 @@ As we can see from the summary table three different species of penguins were re
 
 
 ## Scatterplot
-Let's explore if there is a correlation between the body mass of the penguins and the flipper length of the penguins:
+Let's explore if there is a correlation between the **body mass** of the penguins and the **flipper length** of the penguins:
 ```{r plot body mass vs flipper length, echo =TRUE}
 library(tidyverse) # load the tidyverse package; contains ggplot2
 
@@ -74,7 +74,7 @@ ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g))+
   geom_point()
 ```
 
-Let's add the trend line (fitting linear model):
+Let's add the **trend line** (fitting linear model):
 ```{r plot body mass vs flipper length and trendline, echo =TRUE}
 ggplot(penguins, aes(x=flipper_length_mm,y=body_mass_g))+
   geom_point()+ 
@@ -102,36 +102,39 @@ ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+
 
 ```
 
+Besides of using different **colors** for the data points, we can also use different **shapes**:
 ```{r use different shapes for the sexes, echo =TRUE}
-
-
-ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+
-  geom_point(aes(shape=sex))
+ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species, shape=sex))+
+  geom_point()
 
 ```
-
-
+Geoms that draw points have a **shape** parameter. Legal shape values are the numbers 0 to 25, and the numbers 32 to 127. Only shapes 21 to 25 are filled (and thus are affected by the fill color), the rest are just drawn in the outline color. 
 ```{r, print shapes}
 # Show a list of available shapes
-df_shapes <- data.frame(shape = 0:24)
+df_shapes <- data.frame(shape = 0:25)
 ggplot(df_shapes, aes(0, 0, shape = shape)) +
   geom_point(aes(shape = shape), size = 5, fill = 'red') +
   scale_shape_identity() +
   facet_wrap(~shape) +
   theme_void()
 ```
-
-Change point size
+Shapes 32 to 127 correspond to the corresponding ASCII characters:
+```{r, print shapes 32 to 127}
+# Show a list of available shapes
+df_shapes <- data.frame(shape = 32:127)
+ggplot(df_shapes, aes(0, 0, shape = shape)) +
+  geom_point(aes(shape = shape), size = 5, fill = 'red') +
+  scale_shape_identity() +
+  facet_wrap(~shape) +
+  theme_void()
+```
+We can also change the point **size**:
 ```{r flipper length, bill_length_mm, bodymass, different shapes for the sexes and, echo =TRUE}
-
-
 ggplot(penguins, aes(x=flipper_length_mm, y=bill_length_mm, color=species))+
   geom_point(aes(shape=sex, size=body_mass_g))
-
 ```
 
 ## The Grammar of Graphics
-
 In the exploration of the `palmerpenguins` data, we started with a simple plot and added to it. We added a linear model as a trend line, added model parameters to the plot, grouped the data by species, and changed things like point size and shape.
 
 Starting with the first plot, we started by using the `ggplot()` function to create a ggplot object. As parameters, we told `ggplot()` we wanted to use `penguins` as data for the plot, and used the `aes()` function to define how we wanted to map the penguin data to the plot *aesthetics*. We mapped `flipper_length_mm` onto the x axis and `body_mass_g` onto the y axis.
@@ -149,9 +152,7 @@ This uses `aes()` to map `shape` from the data to the shape displayed. `size = 5
 Each additional layer adds something to the plot or modifies the plot defaults. We can add layers to add additional plots with the same or different data mapped to the plot aesthetics, modify the plot scales, change the coordinate system of the axes, change the theme of the plot, and break the plot into subplots by a categorical variable, which we'll look at next.
 
 ## Faceting
-
-
-
+Faceting is the process that split the chart window in several small parts (a grid), and display a similar chart in each section. Each section usually shows the same graph for a specific group of the dataset.
 ```{r plot body mass vs flipper length and trendline in the different species faceting, echo =TRUE}
 #regression equations will overlap, we will use faceting for them
 ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+
@@ -160,79 +161,57 @@ ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+
   geom_smooth(method="lm", se=FALSE)+
   stat_regline_equation(label.y = 6000, aes(label = ..eq.label..)) + 
   stat_regline_equation(label.y = 5800, aes(label = ..rr.label..))
-  
-
 ```
 
-
+```{r plot body mass vs flipper length and trendline in the different species and island faceting, echo =TRUE}
+#regression equations will overlap, we will use faceting for them
+ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+
+  geom_point(aes(shape=sex))+
+  facet_grid(sex~species, scales="free_x")+
+  geom_smooth(method="lm", se=FALSE)
+```
 ## Themes
-There are built in [ggplot themes](https://ggplot2.tidyverse.org/reference/ggtheme.html) and a long list of cosmetic changes you can make with [theme()](https://ggplot2.tidyverse.org/reference/theme.html).
-Let's try changing themes in other type of plot, histograms using `geom_histogram()`. Let's plot the distribution of the flipper length for each species. We will use my favourite theme: `them_bw()`.
-
-https://r-charts.com/ggplot2/themes/
-
+There are built in-ggplot [themes](https://ggplot2.tidyverse.org/reference/ggtheme.html), as well as [theme packages](https://r-charts.com/ggplot2/themes/). There is a long list of cosmetic changes you can make with [theme()](https://ggplot2.tidyverse.org/reference/theme.html).
+Let's try changing themes in other type of plot, histograms using `geom_histogram()`. Let's plot the distribution of the flipper length for each species. We will use my favourite theme, `them_bw()`:
 ```{r histogram bw_theme, echo =TRUE}
-
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
   geom_histogram(alpha=0.6, position="identity")+
   theme_bw()
 
 ```
 
-
+`theme_void()` is another build-in package:
 ```{r histogram void theme, echo =TRUE}
 
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
   geom_histogram(alpha=0.6, position="identity")+
   theme_void()
-
 ```
-Themes can be modified
+
+As we will see below, themes can be modified.
 
 ### Labels
+Labels can be modified using `labs(x = "Title on x axis", y = "Title on y axis")`and `theme(axis.title.x = element_text(family, face, colour, size), axis.title.y = element_text(family, face, colour, size))`:
 ```{r histogram bw_theme modify labels, echo =TRUE}
-
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
   geom_histogram(alpha=0.6, position="identity")+
   theme_bw() +
   labs(x = "Flipper length (mm)", y = "Counts")+
-  theme(axis.title.x = element_text(color = "black", face = "bold", size = 14),
-        axis.title.y = element_text(color = "black", face = "bold", size = 14))
-  
-
+  theme(axis.title.x = element_text(color = "grey30", face = "bold", size = 14),
+        axis.title.y = element_text(color = "grey30", face = "bold", size = 14))
 ```
-
-### Axis
-
-```{r histogram modify axis , echo =TRUE}
-#modify axis font size
-ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
-  geom_histogram(alpha=0.6, position="identity")+theme_bw()+
-  labs(x = "Flipper length (mm)", y = "Counts")+
-  theme(axis.text.x = element_text(color = "black", size = 12),
-        axis.text.y = element_text(color = "black", size = 12),
-        axis.title.x = element_text(color = "black", face = "bold", size = 14),
-        axis.title.y = element_text(color = "black", face = "bold", size = 14))
- 
-
-```
-You can also change the color, angle, and justification of the axis labels.
-
+We can aslo can change the angle, and justification of the axis labels:
 ```{r histogram further modify axis, echo =TRUE}
 #modify axis font size
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
   geom_histogram(alpha=0.6, position="identity")+theme_bw()+
   labs(x = "Flipper length (mm)", y = "Counts")+
   theme(axis.text.x = element_text(color = "black", size = 12, angle = 45),
-        axis.text.y = element_text(color = "black", size = 12),
-        axis.title.x = element_text(color = "grey30", face = "bold", size = 14),
-        axis.title.y = element_text(color = "grey30", face = "bold", size = 14))
- 
+        axis.text.y = element_text(color = "black", size = 12))
 
 ```
 
 The horizontal or vertical justification, (*hjust* and *vjust*) can also be adjusted. This hjust and vjust argument can be best explained using this figure [[Source from Stackoverflow](https://stackoverflow.com/questions/7263849/what-do-hjust-and-vjust-do-when-making-a-plot-using-ggplot)]:
-
 ```{r out.width ="50%", echo=FALSE}
 knitr::include_graphics("figures-images/hjust-vjust.png")
 ```
@@ -250,6 +229,20 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
 
 ```
 
+### Axis
+The appearance of the text on the axis can be modified using `theme(axis.text.x = element_text(family, face, colour, size), axis.text.y = element_text(family, face, colour, size))`:
+```{r histogram modify axis , echo =TRUE}
+#modify axis font size
+ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
+  geom_histogram(alpha=0.6, position="identity")+theme_bw()+
+  labs(x = "Flipper length (mm)", y = "Counts")+
+  theme(axis.text.x = element_text(color = "black", size = 12),
+        axis.text.y = element_text(color = "black", size = 12),
+        axis.title.x = element_text(color = "black", face = "bold", size = 14),
+        axis.title.y = element_text(color = "black", face = "bold", size = 14))
+ 
+
+```
 
 ### Legends
 
