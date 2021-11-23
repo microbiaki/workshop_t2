@@ -32,7 +32,6 @@ opts_chunk$set(echo=FALSE,
                comment=NA,
                message=FALSE,
                warning=FALSE)
-# opts_knit$set(width=75, fig.width=12, fig.height=8)
 ```
 
 # Explore different types of plots in ggplot2
@@ -58,6 +57,7 @@ Make sure that you have the following packages installed:
 We will use the [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/) dataset. Data were collected and made available by Dr. Kristen Gorman and the Palmer Station, Antarctica LTER, a member of the Long Term Ecological Research Network. Alison Horst gathered the data into an R package and is responsible for all the great penguin illustrations.
 
 We will briefly check the structure of the data table (`penguins`) before we start plotting. Here I am using the `datatable` function from from [DT package](https://rstudio.github.io/DT/) which facilitates the display of dataframes, matrices or tibbles on HTLM pages.
+
 ```{r check penguins, echo=TRUE}
 library(palmerpenguins) # load palmerpenguins package
 library(DT)# load DT package
@@ -228,7 +228,7 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
 ```
 
 The horizontal or vertical justification, (*hjust* and *vjust*) can also be adjusted. This hjust and vjust argument can be best explained using this figure [[Source from Stackoverflow](https://stackoverflow.com/questions/7263849/what-do-hjust-and-vjust-do-when-making-a-plot-using-ggplot)]:
-```{r out.width ="50%", echo=FALSE}
+```{r, echo=FALSE}
 knitr::include_graphics("figures-images/hjust-vjust.png")
 ```
 
@@ -358,7 +358,7 @@ ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
 
 ```
 
-## Violing plots
+## Violin plots
 We can visualize the same distribution using the function `geom_violin()` to create a [violin plot](https://ggplot2.tidyverse.org/reference/geom_violin.html?q=violin), a mirrored density plot displayed in the same way as a boxplot:
 ```{r plot flipper length distribution in the different species using violin, echo =TRUE}
 
