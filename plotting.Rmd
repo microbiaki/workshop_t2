@@ -40,10 +40,18 @@ ggplot2 is an R package for creating graphics based on The Grammar of Graphics^[
 
 ## Required packages
 Make sure that you have the following packages installed:
+
 `palmerpenguin`
+
 `DT`
+
 `tidyverse`
+
 `ggpubr`
+
+`plotly`
+
+`dygraphs`
 
 
 ## Dataset
@@ -108,7 +116,14 @@ ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species, shape=se
   geom_point()
 
 ```
-Geoms that draw points have a **shape** parameter. Legal shape values are the numbers 0 to 25, and the numbers 32 to 127. Only shapes 21 to 25 are filled (and thus are affected by the fill color), the rest are just drawn in the outline color. 
+Geoms that draw points have a **shape** parameter. Legal shape values are the numbers 0 to 25, and the numbers 32 to 127.
+
+- Shapes 0 to 14 are outline only: use color to change colors (outline)
+
+- Shapes 15 to 20 are fill only: use color to change colors (fill)
+-
+Shapes 21 to 25 are outline + fill: use color to change the outline color and fill to change the fill color
+
 ```{r, print shapes}
 # Show a list of available shapes
 df_shapes <- data.frame(shape = 0:25)
