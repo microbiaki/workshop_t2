@@ -241,8 +241,6 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
         axis.text.y = element_text(color = "black", size = 12),
         axis.title.x = element_text(color = "grey30", face = "bold", size = 14),
         axis.title.y = element_text(color = "grey30", face = "bold", size = 14))
- 
-
 ```
 
 ### Axis
@@ -292,7 +290,8 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
         legend.text=element_text(size=12),
         legend.position=c(0.9, 0.85))
 ```
-
+### Colors
+There are several ways colors can be modified in ggplot2. 
 ## Barplot
 A simple barplot can be created using the function `geom_bar()`. We will plot how many individuals from each species were recorded in each island:
 ```{r barplot,fig.height =5, fig.width = 4, echo=TRUE}
@@ -345,7 +344,7 @@ ggplot(penguins,aes(x=island, fill=species))+
 ```
 
 ## Boxplots
-Let visualize the distribution of flipper length in thr different species and sexes using the function `geom_boxplot()` for create a [box and whiskers plot](https://ggplot2.tidyverse.org/reference/geom_boxplot.html):
+Let visualize the distribution of flipper length in the different species and sexes using the function `geom_boxplot()` to create a [box and whiskers plot](https://ggplot2.tidyverse.org/reference/geom_boxplot.html):
 ```{r plot flipper length distribution in the different species and sexes, echo =TRUE}
 ggplot(penguins, aes(x=species, y=flipper_length_mm, fill=sex))+
   geom_boxplot()+ 
@@ -444,18 +443,14 @@ if (!file.exists(csv))
   download.file(csv_url, csv)
 ```
 
-### Read table `read.csv()`
+### Read table
 Now open the file by going into the **Files** RStudio pane, **More** -\> **Show Folder in New Window**. Then double click on `data/cciea_AC.csv` to open in your Spreadsheet program (like Microsoft Excel or Apple Pages or LibreOffice Calc). 
-
-```md
-### Read table `read.csv()`
-```
 
 ```{r, echo =TRUE, results='hide'}
 # attempt to read csv
 d <- read.csv(csv)
 # show the data frame
-d
+head(d)
 ```
 Note how the presence of the 2nd line with units makes the values character `<chr>` data type. 
 But we want numeric values. So we could manually delete that second line of units or look at the **help** documentation for this function (`?read.csv` in Console pane; or `F1` key with cursor on the function in the code editor pane). Notice the `skip` argument, which we can implement like so:
