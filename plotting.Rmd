@@ -103,7 +103,7 @@ ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g))+
 
 Are there any differences between the species?
 ```{r plot body mass vs flipper length and trendline in the different species, echo =TRUE}
-#regression equations will overlap, we will use faceting for them
+#regression equations will overlap, we will use faceting for them (below)
 ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+
   geom_point()+ 
   geom_smooth(method="lm")
@@ -295,10 +295,34 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
 ###Colors
 
 ## Barplot
+A simple barplot can be created using the function `geom_bar()`. We will plot how many individuals from each species were recorded in each island:
+```{r barplot,fig.height =5, fig.width = 4, echo=TRUE}
+ggplot(penguins,aes(x=island, fill=species))+
+  geom_bar()+ 
+  theme_bw()+
+  labs(x = "Island", y = "Number of individuals")+
+  theme(axis.text.x = element_text(color = "black", size = 12),
+        axis.text.y = element_text(color = "black", size = 12),
+        axis.title.x = element_text(color = "black", face = "bold", size = 14),
+        axis.title.y = element_text(color = "black", face = "bold", size = 14))
 
+```
+If we want to produce an non-stacked barplot we need to use the argument `position=position_dodge2` in `geom_bar()`:
+```{r barplot unstacked,fig.height =5, fig.width = 4, echo=TRUE}
+ggplot(penguins,aes(x=island, fill=species))+
+  geom_bar(position=position_dodge2(preserve = "single"))+ 
+  theme_bw()+
+  labs(x = "Island", y = "Number of individuals")+
+  theme(axis.text.x = element_text(color = "black", size = 12),
+        axis.text.y = element_text(color = "black", size = 12),
+        axis.title.x = element_text(color = "black", face = "bold", size = 14),
+        axis.title.y = element_text(color = "black", face = "bold", size = 14))
+
+```
 
 ## Boxplots
-```{r plot flipper length distribution distributio in the different species and sexes, echo =TRUE}
+Let visualize the distribution of flipper length in thr different species and sexes using the function `geom_boxplot()` for create a [box and whiskers plot](https://ggplot2.tidyverse.org/reference/geom_boxplot.html):
+```{r plot flipper length distribution in the different species and sexes, echo =TRUE}
 ggplot(penguins, aes(x=species, y=flipper_length_mm, fill=sex))+
   geom_boxplot()+ 
   theme_bw()+
@@ -310,10 +334,10 @@ ggplot(penguins, aes(x=species, y=flipper_length_mm, fill=sex))+
  
 
 ```
-
+Let's omit the NA values during plotting and reduce the outlier size:
 ```{r plot flipper length distribution distributio in the different species and sexes omitNA, echo =TRUE}
 ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
-  geom_boxplot()+ 
+  geom_boxplot(outlier.size = 1)+ 
   theme_bw()+
   labs(x = "Species", y = "Flipper length (mm)")+
   theme(axis.text.x = element_text(color = "black", size = 12),
@@ -323,8 +347,6 @@ ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
 ```
 
 ```{r plot body flipper length distribution in the different species add ind observations, echo =TRUE}
-
-
 ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
   geom_boxplot()+
   geom_jitter(color="black", size=0.4, alpha=0.9) + 
@@ -337,8 +359,8 @@ ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
 
 ```
 
-## Violinplots
-
+## Violing plots
+We can visualize the same distribution using the function `geom_violin()` to create a [violin plot](https://ggplot2.tidyverse.org/reference/geom_violin.html?q=violin), a mirrored density plot displayed in the same way as a boxplot:
 ```{r plot flipper length distribution in the different species using violin, echo =TRUE}
 
 ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
@@ -352,10 +374,8 @@ ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
 
 ```
 
-
+We also overlay different types of plots:
 ```{r as above overlaying boxplot, echo =TRUE}
-
-
 ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
   geom_violin()+
   geom_boxplot(position=position_dodge(width=0.9), width=0.2) +
