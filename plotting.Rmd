@@ -509,7 +509,6 @@ Another htmlwidget plotting library written more specifically for time series da
 
 ```{r, modify table and dygraphs, echo=TRUE, fig.height = 4, fig.width = 6}
 library(dygraphs)
-library(DT)
 d_rgn_wide <- d_rgn %>% 
 mutate(Year = time) %>% 
 select(Year, region, value) %>% 
