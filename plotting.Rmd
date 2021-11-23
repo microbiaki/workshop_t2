@@ -318,6 +318,31 @@ ggplot(penguins,aes(x=island, fill=species))+
         axis.title.y = element_text(color = "black", face = "bold", size = 14))
 
 ```
+Changing the position to fill, will give us the relative abundance in a stacked plot:
+```{r barplot fill,fig.height =5, fig.width = 4, echo=TRUE}
+ggplot(penguins,aes(x=island, fill=species))+
+  geom_bar(position="fill")+ 
+  theme_bw()+
+  labs(x = "Island", y = "Relative abundance")+
+  theme(axis.text.x = element_text(color = "black", size = 12),
+        axis.text.y = element_text(color = "black", size = 12),
+        axis.title.x = element_text(color = "black", face = "bold", size = 14),
+        axis.title.y = element_text(color = "black", face = "bold", size = 14))
+
+```
+
+We can aslo create the same plot horizontally with `coord_flip()`:
+```{r barplot fill flip, fig.height=3, echo=TRUE}
+ggplot(penguins,aes(x=island, fill=species))+
+  geom_bar(position="fill")+ 
+  theme_bw()+
+  labs(x = "Island", y = "Relative abundance")+
+  theme(axis.text.x = element_text(color = "black", size = 12),
+        axis.text.y = element_text(color = "black", size = 12),
+        axis.title.x = element_text(color = "black", face = "bold", size = 14),
+        axis.title.y = element_text(color = "black", face = "bold", size = 14))+
+  coord_flip()
+```
 
 ## Boxplots
 Let visualize the distribution of flipper length in thr different species and sexes using the function `geom_boxplot()` for create a [box and whiskers plot](https://ggplot2.tidyverse.org/reference/geom_boxplot.html):
@@ -452,9 +477,9 @@ write.csv(d, csv, row.names = F)
 ```{r, echo= TRUE, results='hide'}
 head(d)
 ```
-### Series line plot `aes(color = region)`
+### Series line plot
 
-Next, let's also show the other regional values (`CA`, `OR` and `WA`; not `coastwide`) in the plot as a series with different colors. To do this, we'll want to **tidy** the data into _long_ format so we can have a column for `total_fisheries_revenue` and another `region` column to supply as the `group` and `color` aesthetics based on aesthetics we see are available for `geom_line()`:
+Next, let's also show the other regional values (`CA`, `OR` and `WA`; not `coastwide`) in the plot as a series with different colors `aes(color = region)`. To do this, we'll want to **tidy** the data into _long_ format so we can have a column for `total_fisheries_revenue` and another `region` column to supply as the `group` and `color` aesthetics based on aesthetics we see are available for `geom_line()`:
 
 ```{r plot , echo=TRUE}
 d_rgn <- d %>% 
@@ -506,14 +531,17 @@ ggplotly(p_rgn)
 
 Another htmlwidget plotting library written more specifically for time series data is [`dygraphs`](https://rstudio.github.io/dygraphs). Unlike the ggplot2 data input, a series is expected in _wide_ (not tidy _long_) format. So we use tidyr's `pivot_wider()` first.
 
-```{r, modify table and dygraphs, echo=TRUE, fig.height = 4, fig.width = 6}
+```{r, modify table, echo=TRUE, fig.height = 4, fig.width = 6}
 library(dygraphs)
 d_rgn_wide <- d_rgn %>% 
 mutate(Year = time) %>% 
 select(Year, region, value) %>% 
 pivot_wider(names_from  = region,values_from = value)
 datatable(d_rgn_wide)
+```
 
+
+```{r, dygraphs, echo=TRUE, fig.height = 4, fig.width = 6}
 d_rgn_wide %>% 
 dygraph() %>% 
 dyRangeSelector()
