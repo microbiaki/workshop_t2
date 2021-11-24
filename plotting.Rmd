@@ -288,11 +288,12 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
         legend.title=element_text(color = "black", face = "bold", size=14), 
         legend.text=element_text(size=12),
         legend.position=c(0.9, 0.85))
-```
+````
 
 ### Colors
 There are several ways colors can be modified in ggplot2.
-- `scale_color_manual()` or `scale_fill_manual()` (can accept hex or names):
+
+- Manual with `scale_color_manual()` or `scale_fill_manual()` (can accept **hex numbers** or **names**):
 ```{r histogram modify color, echo =TRUE}
 
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
@@ -309,11 +310,46 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
         legend.position=c(0.9, 0.85))
 ```
 
+- Creation of [evenly spaced colours for discrete data](https://ggplot2.tidyverse.org/reference/scale_hue.html) with `scale_color_hue()` or `scale_fill_hue()` (can accept hex or names):
+```{r histogram modify color hue, echo =TRUE}
+
+ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
+  geom_histogram(alpha=0.6, position="identity")+
+  scale_fill_hue(h = c(0, 90))+
+  theme_bw()+
+  labs(x = "Flipper length (mm)", y = "Counts", fill="Species")+
+  theme(axis.text.x = element_text(color = "black", size = 12),
+        axis.text.y = element_text(color = "black", size = 12),
+        axis.title.x = element_text(color = "black", face = "bold", size = 14),
+        axis.title.y = element_text(color = "black", face = "bold", size = 14),
+        legend.title=element_text(color = "black", face = "bold", size=14), 
+        legend.text=element_text(size=12),
+        legend.position=c(0.9, 0.85))
+```
+
+- Use packages that contain palettes e.g. `RColorBrewer`, `viridis`, or ` Paletteer`:
+```{r histogram modify color viridis, echo =TRUE}
+library(viridis)
+ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
+  geom_histogram(alpha=0.6, position="identity")+
+  scale_fill_viridis(discrete=TRUE)+
+  theme_bw()+
+  labs(x = "Flipper length (mm)", y = "Counts", fill="Species")+
+  theme(axis.text.x = element_text(color = "black", size = 12),
+        axis.text.y = element_text(color = "black", size = 12),
+        axis.title.x = element_text(color = "black", face = "bold", size = 14),
+        axis.title.y = element_text(color = "black", face = "bold", size = 14),
+        legend.title=element_text(color = "black", face = "bold", size=14), 
+        legend.text=element_text(size=12),
+        legend.position=c(0.9, 0.85))
+```
+
 ## Barplot
 A simple barplot can be created using the function `geom_bar()`. We will plot how many individuals from each species were recorded in each island:
 ```{r barplot,fig.height =5, fig.width = 4, echo=TRUE}
 ggplot(penguins,aes(x=island, fill=species))+
   geom_bar()+ 
+  scale_fill_manual(values = c("#69b3a2", "purple", "orange"))+
   theme_bw()+
   labs(x = "Island", y = "Number of individuals")+
   theme(axis.text.x = element_text(color = "black", size = 12),
@@ -325,7 +361,8 @@ ggplot(penguins,aes(x=island, fill=species))+
 If we want to produce an non-stacked barplot we need to use the argument `position=position_dodge2` in `geom_bar()`:
 ```{r barplot unstacked,fig.height =5, fig.width = 4, echo=TRUE}
 ggplot(penguins,aes(x=island, fill=species))+
-  geom_bar(position=position_dodge2(preserve = "single"))+ 
+  geom_bar(position=position_dodge2(preserve = "single"))+
+  scale_fill_manual(values = c("#69b3a2", "purple", "orange"))+
   theme_bw()+
   labs(x = "Island", y = "Number of individuals")+
   theme(axis.text.x = element_text(color = "black", size = 12),
@@ -338,6 +375,7 @@ Changing the position to fill, will give us the relative abundance in a stacked 
 ```{r barplot fill,fig.height =5, fig.width = 4, echo=TRUE}
 ggplot(penguins,aes(x=island, fill=species))+
   geom_bar(position="fill")+ 
+  scale_fill_manual(values = c("#69b3a2", "purple", "orange"))+
   theme_bw()+
   labs(x = "Island", y = "Relative abundance")+
   theme(axis.text.x = element_text(color = "black", size = 12),
@@ -351,6 +389,7 @@ We can aslo create the same plot horizontally with `coord_flip()`:
 ```{r barplot fill flip, fig.height=3, echo=TRUE}
 ggplot(penguins,aes(x=island, fill=species))+
   geom_bar(position="fill")+ 
+  scale_fill_manual(values = c("#69b3a2", "purple", "orange"))+
   theme_bw()+
   labs(x = "Island", y = "Relative abundance")+
   theme(axis.text.x = element_text(color = "black", size = 12),
@@ -364,7 +403,7 @@ ggplot(penguins,aes(x=island, fill=species))+
 Let visualize the distribution of flipper length in the different species and sexes using the function `geom_boxplot()` to create a [box and whiskers plot](https://ggplot2.tidyverse.org/reference/geom_boxplot.html):
 ```{r plot flipper length distribution in the different species and sexes, echo =TRUE}
 ggplot(penguins, aes(x=species, y=flipper_length_mm, fill=sex))+
-  geom_boxplot()+ 
+  geom_boxplot()+
   theme_bw()+
   labs(x = "Species", y = "Flipper length (mm)")+
   theme(axis.text.x = element_text(color = "black", size = 12),
