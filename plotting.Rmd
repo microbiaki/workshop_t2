@@ -40,7 +40,7 @@ ggplot2 is an R package for creating graphics based on The Grammar of Graphics^[
 ## Required packages
 Make sure that you have the following packages installed:
 
-`palmerpenguin`
+`palmerpenguins`
 
 `DT`
 
@@ -290,10 +290,10 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
         legend.position=c(0.9, 0.85))
 ````
 
-### Colors
+## Colors
 There are several ways colors can be modified in ggplot2.
 
-- Manual with `scale_color_manual()` or `scale_fill_manual()` (can accept **hex numbers** or **names**):
+- Manually with `scale_color_manual()` or `scale_fill_manual()` (can accept **hex numbers** or **names**):
 ```{r histogram modify color, echo =TRUE}
 
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
@@ -310,7 +310,7 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
         legend.position=c(0.9, 0.85))
 ```
 
-- Creation of [evenly spaced colours for discrete data](https://ggplot2.tidyverse.org/reference/scale_hue.html) with `scale_color_hue()` or `scale_fill_hue()` (can accept hex or names):
+- Creating of [evenly spaced colours for discrete data](https://ggplot2.tidyverse.org/reference/scale_hue.html) with `scale_color_hue()` or `scale_fill_hue()` (can accept hex or names):
 ```{r histogram modify color hue, echo =TRUE}
 
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
@@ -327,7 +327,7 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
         legend.position=c(0.9, 0.85))
 ```
 
-- Use packages that contain palettes e.g. `RColorBrewer`, `viridis`, or ` Paletteer`:
+- Using packages that contain palettes e.g. `RColorBrewer`, `viridis`, or ` Paletteer`:
 ```{r histogram modify color viridis, echo =TRUE}
 library(viridis)
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
@@ -466,8 +466,6 @@ ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
         axis.title.y = element_text(color = "black", face = "bold", size = 14))
 ```
 
-
-## Colors
 
 
 # Plot interactively with plotly or dygraphs
