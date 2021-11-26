@@ -580,7 +580,7 @@ horizontal_bar <- ggplot(penguins, aes(x = island, fill = species)) +
   coord_flip()
 
 # Violin plot (slightly different than above)
-violin<-ggplot(na.omit(penguins), aes(x=sex, y=flipper_length_mm, fill=species))+
+violin_mod<-ggplot(na.omit(penguins), aes(x=sex, y=flipper_length_mm, fill=species))+
   geom_violin()+
   geom_boxplot(position=position_dodge(width=0.9), width=0.2) +
   scale_fill_manual(values = c("orange" , "purple", "#69b3a2"))+
@@ -598,13 +598,13 @@ And combine them:
 library(cowplot)
 library(patchwork)
 cowplot::plot_grid(horizontal_bar,
-          violin,
+          violin_mod,
           ncol = 1)
 # Add "labels = c("A", "B")" to cowplot function
 # ?plot_grid()
 
 # Patchwork
-horizontal_bar + violin + patchwork::plot_layout(ncol = 1)
+horizontal_bar + violin_mod + patchwork::plot_layout(ncol = 1)
 ```
 
 
