@@ -76,9 +76,10 @@ As we can see from the summary table three different species of penguins were re
 ## Scatterplot
 Let's explore if there is a correlation between the **body mass** of the penguins and the **flipper length** of the penguins:
 ```{r plot body mass vs flipper length, echo =TRUE}
-library(tidyverse) # load the tidyverse package; contains ggplot2
+library(tidyverse) # load the tidyverse package (contains ggplot2)
 
 ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g))+
+  #ass points
   geom_point()
 ```
 
@@ -86,6 +87,7 @@ Let's add the **trend line** (fitting linear model):
 ```{r plot body mass vs flipper length and trendline, echo =TRUE}
 ggplot(penguins, aes(x=flipper_length_mm,y=body_mass_g))+
   geom_point()+ 
+  #add trend line
   geom_smooth(method="lm") 
 ```
 
@@ -97,11 +99,12 @@ library(ggpubr) #package the facilitates the display of the equation
 ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g))+
   geom_point()+ 
   geom_smooth(method="lm") + 
-  stat_regline_equation(label.y = 6000, aes(label = ..eq.label..)) + 
+  # add equation use label.y to define the position
+  stat_regline_equation(label.y = 5800, aes(label = ..eq.label..)) + 
   stat_regline_equation(label.y = 5600, aes(label = ..rr.label..))
 ```
 
-Are there any differences between the species?
+Are there any differences between the species? Use `color` in aesthetics to color and group by species:
 ```{r plot body mass vs flipper length and trendline in the different species, echo =TRUE}
 #regression equations will overlap, we will use faceting for them (below)
 ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+
@@ -114,7 +117,6 @@ Besides of using different **colors** for the data points, we can also use diffe
 ```{r use different shapes for the sexes, echo =TRUE}
 ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species, shape=sex))+
   geom_point()
-
 ```
 Geoms that draw points have a **shape** parameter. Legal shape values are the numbers 0 to 25, and the numbers 32 to 127.
 
@@ -174,6 +176,7 @@ Faceting is the process that split the chart window in several small parts (a gr
 ```{r plot body mass vs flipper length and trendline in the different species faceting, echo =TRUE}
 ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+
   geom_point(aes(shape=sex))+
+  # lay out panels  horizontally, split species, set the x axis free
   facet_wrap(~species, scales="free_x")+
   geom_smooth(method="lm", se=FALSE)+
   stat_regline_equation(label.y = 6000, aes(label = ..eq.label..)) + 
@@ -184,6 +187,7 @@ And `facet_grid`:
 ```{r plot body mass vs flipper length and trendline in the different species and island faceting, echo =TRUE}
 ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+
   geom_point(aes(shape=sex))+
+  # lay out panels  horizontally by species and vertically by sex
   facet_grid(sex~species, scales="free_x")+
   geom_smooth(method="lm", se=FALSE)
 ```
@@ -192,8 +196,11 @@ ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+
 There are built in-ggplot [themes](https://ggplot2.tidyverse.org/reference/ggtheme.html), as well as [theme packages](https://r-charts.com/ggplot2/themes/). There is a long list of cosmetic changes you can make with [theme()](https://ggplot2.tidyverse.org/reference/theme.html).
 Let's try changing themes in other type of plot, histograms using `geom_histogram()`. Let's plot the distribution of the flipper length for each species. We will use my favourite theme, `them_bw()`:
 ```{r histogram bw_theme, echo =TRUE}
+#use fill to color the different species. What would happen if you used color instead?
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
+  #set the transparency at 0.6 in order to be able to observe overlap, use the position "identity" not to have the bins stacked 
   geom_histogram(alpha=0.6, position="identity")+
+  #use theme bw
   theme_bw()
 
 ```
@@ -214,17 +221,39 @@ Labels can be modified using `labs(x = "Title on x axis", y = "Title on y axis")
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
   geom_histogram(alpha=0.6, position="identity")+
   theme_bw() +
+  #set the labels for x and y axis
   labs(x = "Flipper length (mm)", y = "Counts")+
+  #modify the the color, the face and the size of the label text
   theme(axis.title.x = element_text(color = "grey30", face = "bold", size = 14),
         axis.title.y = element_text(color = "grey30", face = "bold", size = 14))
 ```
-We can aslo can change the angle, and justification of the axis labels:
+
+
+### Axis
+The appearance of the text on the axis can be modified using `theme(axis.text.x = element_text(family, face, colour, size), axis.text.y = element_text(family, face, colour, size))`:
+```{r histogram modify axis , echo =TRUE}
+#modify axis font size
+ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
+  geom_histogram(alpha=0.6, position="identity")+theme_bw()+
+  labs(x = "Flipper length (mm)", y = "Counts")+
+  theme(axis.title.x = element_text(color = "back", face = "bold", size = 14),
+        axis.title.y = element_text(color = "black", face = "bold", size = 14),
+        #change color and size of axis text
+        axis.text.x = element_text(color = "grey30", size = 12),
+        axis.text.y = element_text(color = "grey30", size = 12))
+```
+
+We can change the angle, and justification of the axis text:
 ```{r histogram further modify axis, echo =TRUE}
 #modify axis font size
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
   geom_histogram(alpha=0.6, position="identity")+theme_bw()+
   labs(x = "Flipper length (mm)", y = "Counts")+
-  theme(axis.text.x = element_text(color = "black", size = 12, angle = 45),
+  #change the text angle on the x axis
+  theme(axis.title.x = element_text(color = "back", face = "bold", size = 14),
+        axis.title.y = element_text(color = "black", face = "bold", size = 14),
+        #rotate x text angle to 45
+        axis.text.x = element_text(color = "black", size = 12, angle = 45),
         axis.text.y = element_text(color = "black", size = 12))
 
 ```
@@ -240,25 +269,10 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
   geom_histogram(alpha=0.6, position="identity")+
   theme_bw()+
   labs(x = "Flipper length (mm)", y = "Counts")+
-  theme(axis.text.x = element_text(color = "black", size = 12, angle = 45, hjust = 1, vjust = 1),
-        axis.text.y = element_text(color = "black", size = 12),
-        axis.title.x = element_text(color = "grey30", face = "bold", size = 14),
-        axis.title.y = element_text(color = "grey30", face = "bold", size = 14))
-```
-
-### Axis
-The appearance of the text on the axis can be modified using `theme(axis.text.x = element_text(family, face, colour, size), axis.text.y = element_text(family, face, colour, size))`:
-```{r histogram modify axis , echo =TRUE}
-#modify axis font size
-ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
-  geom_histogram(alpha=0.6, position="identity")+theme_bw()+
-  labs(x = "Flipper length (mm)", y = "Counts")+
-  theme(axis.text.x = element_text(color = "black", size = 12),
-        axis.text.y = element_text(color = "black", size = 12),
-        axis.title.x = element_text(color = "black", face = "bold", size = 14),
-        axis.title.y = element_text(color = "black", face = "bold", size = 14))
- 
-
+  theme(axis.title.x = element_text(color = "grey30", face = "bold", size = 14),
+        axis.title.y = element_text(color = "grey30", face = "bold", size = 14),
+        axis.text.x = element_text(color = "black", size = 12, angle = 45, hjust = 1, vjust = 1),
+        axis.text.y = element_text(color = "black", size = 12))
 ```
 
 ### Legends
@@ -274,7 +288,9 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
         axis.text.y = element_text(color = "black", size = 12),
         axis.title.x = element_text(color = "black", face = "bold", size = 14),
         axis.title.y = element_text(color = "black", face = "bold", size = 14),
-        legend.title=element_text(color = "black", face = "bold", size=14), 
+        #change appearance of legend title
+        legend.title=element_text(color = "black", face = "bold", size=14),
+        #change appearance of legend text
         legend.text=element_text(size=12), 
         legend.position="top")
 ```
@@ -289,8 +305,9 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
         axis.title.y = element_text(color = "black", face = "bold", size = 14),
         legend.title=element_text(color = "black", face = "bold", size=14), 
         legend.text=element_text(size=12),
+        #adjuct legend position
         legend.position=c(0.9, 0.85))
-````
+```
 
 ### Other modifications
 Adjust the appearance of the facet text using `strip.text` and the background using `strip.background`:
