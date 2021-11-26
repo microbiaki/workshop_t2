@@ -121,8 +121,8 @@ Geoms that draw points have a **shape** parameter. Legal shape values are the nu
 - Shapes 0 to 14 are outline only: use color to change colors (outline)
 
 - Shapes 15 to 20 are fill only: use color to change colors (fill)
--
-Shapes 21 to 25 are outline + fill: use color to change the outline color and fill to change the fill color
+
+-Shapes 21 to 25 are outline + fill: use color to change the outline color and fill to change the fill color
 
 ```{r, print shapes}
 # Show a list of available shapes
@@ -149,6 +149,9 @@ ggplot(penguins, aes(x=flipper_length_mm, y=bill_length_mm, color=species))+
   geom_point(aes(shape=sex, size=body_mass_g))
 ```
 
+> Challenge: Create a similar plot where flipper length is the x-axis and body mass is along the y-axis. Use a scatterplot where the shapes will all be triangles that all have a black outline and filled in color associated with each penguin species.
+
+
 ## The Grammar of Graphics
 In the exploration of the `palmerpenguins` data, we started with a simple plot and added to it. We added a linear model as a trend line, added model parameters to the plot, grouped the data by species, and changed things like point size and shape.
 
@@ -167,9 +170,8 @@ This uses `aes()` to map `shape` from the data to the shape displayed. `size = 5
 Each additional layer adds something to the plot or modifies the plot defaults. We can add layers to add additional plots with the same or different data mapped to the plot aesthetics, modify the plot scales, change the coordinate system of the axes, change the theme of the plot, and break the plot into subplots by a categorical variable, which we'll look at next.
 
 ## Faceting
-Faceting is the process that split the chart window in several small parts (a grid), and display a similar chart in each section. Each section usually shows the same graph for a specific group of the dataset.
+Faceting is the process that split the chart window in several small parts (a grid), and display a similar chart in each section. Each section usually shows the same graph for a specific group of the dataset. We will be working with `facet_wrap()`:
 ```{r plot body mass vs flipper length and trendline in the different species faceting, echo =TRUE}
-#regression equations will overlap, we will use faceting for them
 ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+
   geom_point(aes(shape=sex))+
   facet_wrap(~species, scales="free_x")+
@@ -178,8 +180,8 @@ ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+
   stat_regline_equation(label.y = 5800, aes(label = ..rr.label..))
 ```
 
+And `facet_grid`:
 ```{r plot body mass vs flipper length and trendline in the different species and island faceting, echo =TRUE}
-#regression equations will overlap, we will use faceting for them
 ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+
   geom_point(aes(shape=sex))+
   facet_grid(sex~species, scales="free_x")+
@@ -206,7 +208,7 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
 
 As we will see below, themes can be modified.
 
-## Labels
+### Labels
 Labels can be modified using `labs(x = "Title on x axis", y = "Title on y axis")`and `theme(axis.title.x = element_text(family, face, colour, size), axis.title.y = element_text(family, face, colour, size))`:
 ```{r histogram bw_theme modify labels, echo =TRUE}
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
@@ -277,7 +279,7 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
         legend.position="top")
 ```
 It is also possible to position the legend inside the plotting area.The numeric position below is relative to the entire area, including titles and labels, not just the plotting area; where x,y is 0,0 (bottom left) to 1,1 (top right):
-```{r histogram modify legends 2, echo =TRUE}
+```{r histogram modify legends 3, echo =TRUE}
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
   geom_histogram(alpha=0.6, position="identity")+theme_bw()+
   labs(x = "Flipper length (mm)", y = "Counts", fill="Species")+
@@ -289,6 +291,29 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
         legend.text=element_text(size=12),
         legend.position=c(0.9, 0.85))
 ````
+
+### Other modifications
+Adjust the appearance of the facet text using `strip.text` and the background using `strip.background`:
+```{r modify facet, echo =TRUE}
+ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+
+  geom_point(aes(shape=sex))+
+  facet_wrap(~species, scales="free_x")+
+  geom_smooth(method="lm", se=FALSE)+
+  stat_regline_equation(label.y = 6000, aes(label = ..eq.label..)) + 
+  stat_regline_equation(label.y = 5800, aes(label = ..rr.label..))+
+  labs(x = "Flipper length (mm)", y = "Body mass (g)", fill="Species", shape="Sex")+
+  theme_bw()+
+  theme(axis.text.x = element_text(color = "black", size = 12),
+        axis.text.y = element_text(color = "black", size = 12),
+        axis.title.x = element_text(color = "black", face = "bold", size = 14),
+        axis.title.y = element_text(color = "black", face = "bold", size = 14),
+        legend.title=element_text(color = "black", face = "bold", size=14), 
+        legend.text=element_text(size=12),
+        #modify text
+        strip.text.x = element_text(colour = "grey30", face = "bold", size=16),
+        #modify background
+        strip.background =element_rect(fill="white"))
+```
 
 ## Colors
 There are several ways colors can be modified in ggplot2.
@@ -410,8 +435,6 @@ ggplot(penguins, aes(x=species, y=flipper_length_mm, fill=sex))+
         axis.text.y = element_text(color = "black", size = 12),
         axis.title.x = element_text(color = "black", face = "bold", size = 14),
         axis.title.y = element_text(color = "black", face = "bold", size = 14))
- 
-
 ```
 Let's omit the NA values during plotting and reduce the outlier size:
 ```{r plot flipper length distribution distributio in the different species and sexes omitNA, echo =TRUE}
