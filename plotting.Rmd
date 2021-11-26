@@ -523,7 +523,7 @@ ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
         axis.title.x = element_text(color = "black", face = "bold", size = 14),
         axis.title.y = element_text(color = "black", face = "bold", size = 14))
 ```
-
+You can add the individual points using `geom_jitter()`:
 ```{r plot body flipper length distribution in the different species add ind observations, echo =TRUE}
 ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
   geom_boxplot()+
@@ -608,11 +608,28 @@ horizontal_bar + violin_mod + patchwork::plot_layout(ncol = 1)
 ```
 
 
-## Save plots
+## Saving plots
+[`ggsave()`](https://ggplot2.tidyverse.org/reference/ggsave.html) is a function for saving the last plot displayed. It  guesses the type of graphics device from the extension. 
+```{r, ggsave, echo=TRUE}
+#make directory called "plots"
+dir.create("plots", showWarnings = F)
+
+#and save the last plot, adjust width and height
+ggsave("plots/combined.png", width = 15, height =10, units = "cm")
+```
+
+Plots can also be saved with `print()`
+```{r, print, echo=TRUE, results="hide"}
+p <- horizontal_bar + violin_mod + patchwork::plot_layout(ncol = 1)
+png("plots/combined_print.png", width=1800,height=1600,res=300)
+print(p)
+dev.off()
+```
 
 # Plot interactively with plotly or dygraphs
 
-##Dataset
+
+## Dataset
 The following material is from XXX
 
 ### Get URL to CSV
@@ -732,7 +749,7 @@ datatable(d_rgn_wide)
 ```
 
 
-```{r, dygraphs, echo=TRUE, fig.height = 4, fig.width = 6}
+```{r, dygraphs, echo=TRUE, fig.height = 4, fig.width = 8}
 d_rgn_wide %>% 
 dygraph() %>% 
 dyRangeSelector()
