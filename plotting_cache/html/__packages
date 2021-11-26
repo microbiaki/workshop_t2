@@ -21,3 +21,5 @@ rccdates
 DT
 viridisLite
 viridis
+cowplot
+patchwork

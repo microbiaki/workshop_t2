@@ -52,6 +52,10 @@ Make sure that you have the following packages installed:
 
 `dygraphs`
 
+`cowplot`
+
+`patchwork`
+
 
 ## Dataset
 We will use the [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/) dataset. Data were collected and made available by Dr. Kristen Gorman and the Palmer Station, Antarctica LTER, a member of the Long Term Ecological Research Network. Alison Horst gathered the data into an R package and is responsible for all the great penguin illustrations.
@@ -199,7 +203,7 @@ Let's try changing themes in other type of plot, histograms using `geom_histogra
 #use fill to color the different species. What would happen if you used color instead?
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
   #set the transparency at 0.6 in order to be able to observe overlap, use the position "identity" not to have the bins stacked 
-  geom_histogram(alpha=0.6, position="identity")+
+  geom_histogram(alpha=0.8, position="identity")+
   #use theme bw
   theme_bw()
 
@@ -209,7 +213,7 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
 ```{r histogram void theme, echo =TRUE}
 
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
-  geom_histogram(alpha=0.6, position="identity")+
+  geom_histogram(alpha=0.8, position="identity")+
   theme_void()
 ```
 
@@ -219,7 +223,7 @@ As we will see below, themes can be modified.
 Labels can be modified using `labs(x = "Title on x axis", y = "Title on y axis")`and `theme(axis.title.x = element_text(family, face, colour, size), axis.title.y = element_text(family, face, colour, size))`:
 ```{r histogram bw_theme modify labels, echo =TRUE}
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
-  geom_histogram(alpha=0.6, position="identity")+
+  geom_histogram(alpha=0.8, position="identity")+
   theme_bw() +
   #set the labels for x and y axis
   labs(x = "Flipper length (mm)", y = "Counts")+
@@ -234,9 +238,9 @@ The appearance of the text on the axis can be modified using `theme(axis.text.x 
 ```{r histogram modify axis , echo =TRUE}
 #modify axis font size
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
-  geom_histogram(alpha=0.6, position="identity")+theme_bw()+
+  geom_histogram(alpha=0.8, position="identity")+theme_bw()+
   labs(x = "Flipper length (mm)", y = "Counts")+
-  theme(axis.title.x = element_text(color = "back", face = "bold", size = 14),
+  theme(axis.title.x = element_text(color = "black", face = "bold", size = 14),
         axis.title.y = element_text(color = "black", face = "bold", size = 14),
         #change color and size of axis text
         axis.text.x = element_text(color = "grey30", size = 12),
@@ -247,10 +251,10 @@ We can change the angle, and justification of the axis text:
 ```{r histogram further modify axis, echo =TRUE}
 #modify axis font size
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
-  geom_histogram(alpha=0.6, position="identity")+theme_bw()+
+  geom_histogram(alpha=0.8, position="identity")+theme_bw()+
   labs(x = "Flipper length (mm)", y = "Counts")+
   #change the text angle on the x axis
-  theme(axis.title.x = element_text(color = "back", face = "bold", size = 14),
+  theme(axis.title.x = element_text(color = "black", face = "bold", size = 14),
         axis.title.y = element_text(color = "black", face = "bold", size = 14),
         #rotate x text angle to 45
         axis.text.x = element_text(color = "black", size = 12, angle = 45),
@@ -266,7 +270,7 @@ knitr::include_graphics("figures-images/hjust-vjust.png")
 e.g.:
 ```{r histogram further modify axis adjust, echo =TRUE}
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
-  geom_histogram(alpha=0.6, position="identity")+
+  geom_histogram(alpha=0.8, position="identity")+
   theme_bw()+
   labs(x = "Flipper length (mm)", y = "Counts")+
   theme(axis.title.x = element_text(color = "grey30", face = "bold", size = 14),
@@ -281,7 +285,7 @@ Legends can be modified inside theme using `legend.title=element_text(family, fa
 ```{r histogram modify legends , echo =TRUE}
 
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
-  geom_histogram(alpha=0.6, position="identity")+
+  geom_histogram(alpha=0.8, position="identity")+
   theme_bw()+
   labs(x = "Flipper length (mm)", y = "Counts", fill="Species")+
   theme(axis.text.x = element_text(color = "black", size = 12),
@@ -297,7 +301,7 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
 It is also possible to position the legend inside the plotting area.The numeric position below is relative to the entire area, including titles and labels, not just the plotting area; where x,y is 0,0 (bottom left) to 1,1 (top right):
 ```{r histogram modify legends 3, echo =TRUE}
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
-  geom_histogram(alpha=0.6, position="identity")+theme_bw()+
+  geom_histogram(alpha=0.8, position="identity")+theme_bw()+
   labs(x = "Flipper length (mm)", y = "Counts", fill="Species")+
   theme(axis.text.x = element_text(color = "black", size = 12),
         axis.text.y = element_text(color = "black", size = 12),
@@ -308,6 +312,8 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
         #adjuct legend position
         legend.position=c(0.9, 0.85))
 ```
+
+> Challenge: Remake this plot, remove the legend and the x-axis labels.
 
 ### Other modifications
 Adjust the appearance of the facet text using `strip.text` and the background using `strip.background`:
@@ -339,8 +345,8 @@ There are several ways colors can be modified in ggplot2.
 ```{r histogram modify color, echo =TRUE}
 
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
-  geom_histogram(alpha=0.6, position="identity")+
-  scale_fill_manual(values=c("#69b3a2", "purple", "orange"))+
+  geom_histogram(alpha=0.8, position="identity")+
+  scale_fill_manual(values=c("orange" , "purple", "#69b3a2"))+
   theme_bw()+
   labs(x = "Flipper length (mm)", y = "Counts", fill="Species")+
   theme(axis.text.x = element_text(color = "black", size = 12),
@@ -356,7 +362,7 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
 ```{r histogram modify color hue, echo =TRUE}
 
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
-  geom_histogram(alpha=0.6, position="identity")+
+  geom_histogram(alpha=0.8, position="identity")+
   scale_fill_hue(h = c(0, 90))+
   theme_bw()+
   labs(x = "Flipper length (mm)", y = "Counts", fill="Species")+
@@ -386,12 +392,69 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
         legend.position=c(0.9, 0.85))
 ```
 
+### Factor colors
+```{r, set order, echo =TRUE}
+# Insert custom colors with factoring:
+species_order <- c("Adelie", "Chinstrap", "Gentoo")
+species_color <- c("pink", "lightgreen", "grey")
+
+# Set new column equal to factor of correct ORDER
+penguins$SPECIES_ORDER <- factor(penguins$species, levels = species_order)
+
+# Set order equal to names of colors
+names(species_color) <- species_order
+
+colnames(penguins) # New column has been added
+```
+
+Then modify the `fill=`  in the ggplot code and add `scale_fill_manual(values = ...)`
+```{r , histogram with order, echo =TRUE}
+ggplot(penguins, aes(flipper_length_mm, fill = SPECIES_ORDER)) +
+  geom_histogram(alpha = 0.8, position = "identity") +
+  scale_fill_manual(values = species_color) + 
+  theme_bw() + 
+  labs(x = "Flipper length (mm)",
+       y = "Counts", fill = "Species") + 
+  theme(axis.text.x = element_text(color = "black", size = 12), 
+        axis.text.y = element_text(color = "black", size = 12), 
+        axis.title.x = element_text(color = "black",
+                                    face = "bold", 
+                                    size = 14), 
+        axis.title.y = element_text(color = "black", 
+                                    face = "bold",size = 14), legend.title = element_text(color = "black", face = "bold", size = 14),
+        legend.text = element_text(size = 12), legend.position = c(0.9, 0.85))
+```
+
+An example of why this is important:
+```{r example, echo=TRUE}
+# If we take out one of the species, like Chinstrap, we want the colors to remain the same for the species. This way you can link colors throughout your whole analysis
+penguins %>% 
+  filter(species != "Chinstrap") %>% 
+  ggplot(aes(flipper_length_mm, fill = SPECIES_ORDER)) +
+  geom_histogram(alpha = 0.8, position = "identity") +
+  scale_fill_manual(values = species_color) + 
+  theme_bw() + 
+  labs(x = "Flipper length (mm)",
+       y = "Counts", fill = "Species") + 
+  theme(axis.text.x = element_text(color = "black", size = 12), 
+        axis.text.y = element_text(color = "black", size = 12), 
+        axis.title.x = element_text(color = "black",
+                                    face = "bold", 
+                                    size = 14), 
+        axis.title.y = element_text(color = "black", 
+                                    face = "bold",size = 14), legend.title = element_text(color = "black", face = "bold", size = 14),
+        legend.text = element_text(size = 12), legend.position = c(0.9, 0.85))
+
+# By removing Chinstrap - the green data was removed, and we kept the same color for Adelie and Gentoo.
+# This is the same syntax for shapes
+```
+
 ## Barplot
 A simple barplot can be created using the function `geom_bar()`. We will plot how many individuals from each species were recorded in each island:
 ```{r barplot,fig.height =5, fig.width = 4, echo=TRUE}
 ggplot(penguins,aes(x=island, fill=species))+
   geom_bar()+ 
-  scale_fill_manual(values = c("#69b3a2", "purple", "orange"))+
+  scale_fill_manual(values = c("orange" , "purple", "#69b3a2"))+
   theme_bw()+
   labs(x = "Island", y = "Number of individuals")+
   theme(axis.text.x = element_text(color = "black", size = 12),
@@ -404,7 +467,7 @@ If we want to produce an non-stacked barplot we need to use the argument `positi
 ```{r barplot unstacked,fig.height =5, fig.width = 4, echo=TRUE}
 ggplot(penguins,aes(x=island, fill=species))+
   geom_bar(position=position_dodge2(preserve = "single"))+
-  scale_fill_manual(values = c("#69b3a2", "purple", "orange"))+
+  scale_fill_manual(values = c("orange" , "purple", "#69b3a2"))+
   theme_bw()+
   labs(x = "Island", y = "Number of individuals")+
   theme(axis.text.x = element_text(color = "black", size = 12),
@@ -417,7 +480,7 @@ Changing the position to fill, will give us the relative abundance in a stacked 
 ```{r barplot fill,fig.height =5, fig.width = 4, echo=TRUE}
 ggplot(penguins,aes(x=island, fill=species))+
   geom_bar(position="fill")+ 
-  scale_fill_manual(values = c("#69b3a2", "purple", "orange"))+
+  scale_fill_manual(values = c("orange" , "purple", "#69b3a2"))+
   theme_bw()+
   labs(x = "Island", y = "Relative abundance")+
   theme(axis.text.x = element_text(color = "black", size = 12),
@@ -431,7 +494,7 @@ We can aslo create the same plot horizontally with `coord_flip()`:
 ```{r barplot fill flip, fig.height=3, echo=TRUE}
 ggplot(penguins,aes(x=island, fill=species))+
   geom_bar(position="fill")+ 
-  scale_fill_manual(values = c("#69b3a2", "purple", "orange"))+
+  scale_fill_manual(values = c("orange" , "purple", "#69b3a2"))+
   theme_bw()+
   labs(x = "Island", y = "Relative abundance")+
   theme(axis.text.x = element_text(color = "black", size = 12),
@@ -495,18 +558,61 @@ ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
 
 We also overlay different types of plots:
 ```{r as above overlaying boxplot, echo =TRUE}
-ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
+ggplot(na.omit(penguins), aes(x = species, y = flipper_length_mm, fill = sex)) +
+  geom_violin() + 
+  geom_boxplot(position = position_dodge(width = 0.9), width = 0.2) +
+  theme_bw() + 
+  labs(x = "Species", y = "Flipper length (mm)") + 
+  theme(axis.text.x = element_text(color = "black", size = 12), 
+        axis.text.y = element_text(color = "black", size = 12), 
+        axis.title.x = element_text(color = "black", size = 14), 
+        axis.title.y = element_text(color = "black", face = "bold", size = 14))
+```
+
+## Combining plots
+Lets set 2 plots equal to R objects and combine them:
+```{r, make R objects, echo=TRUE}
+# Horizontal bar:
+horizontal_bar <- ggplot(penguins, aes(x = island, fill = species)) + 
+  geom_bar(position = "fill") +
+  scale_fill_manual(values = c("orange" , "purple", "#69b3a2")) + 
+  theme_bw() + labs(x = "Island", y = "Relative abundance") + 
+  theme(axis.text.x = element_text(color = "black", size = 12), 
+        axis.text.y = element_text(color = "black", size = 12), 
+        axis.title.x = element_text(color = "black", face = "bold", size = 14), 
+        axis.title.y = element_text(color = "black", face = "bold", size = 14)) + 
+  coord_flip()
+
+# Violin plot (slightly different than above)
+violin<-ggplot(na.omit(penguins), aes(x=sex, y=flipper_length_mm, fill=species))+
   geom_violin()+
   geom_boxplot(position=position_dodge(width=0.9), width=0.2) +
+  scale_fill_manual(values = c("orange" , "purple", "#69b3a2"))+
   theme_bw()+
-  labs(x = "Species", y = "Flipper length (mm)")+
-  theme(axis.text.x = element_text(color = "black", size = 12),
+  labs(x = "Sex", y = "Flipper length (mm)")+
+  theme(legend.position = "none",
+        axis.text.x = element_text(color = "black", size = 12),
         axis.text.y = element_text(color = "black", size = 12),
         axis.title.x = element_text(color = "black", face = "bold", size = 14),
         axis.title.y = element_text(color = "black", face = "bold", size = 14))
 ```
 
+And combine them:
+```{r, combine, echo=TRUE}
+library(cowplot)
+library(patchwork)
+cowplot::plot_grid(horizontal_bar,
+          violin,
+          ncol = 1)
+# Add "labels = c("A", "B")" to cowplot function
+# ?plot_grid()
 
+# Patchwork
+horizontal_bar + violin + patchwork::plot_layout(ncol = 1)
+```
+
+
+## Save plots
 
 # Plot interactively with plotly or dygraphs
 
