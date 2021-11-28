@@ -726,17 +726,15 @@ p_rgn <- ggplot(
 p_rgn
 ```
 
+## Make interactive ggplots with `ggplotly()`
 When rendering to HTML, you can render most `ggplot` objects interactively with [`ggplotly()`](https://plotly.com/ggplot2). The `plotly` library is an R [htmlwidget](http://www.htmlwidgets.org) providing simple R functions to render interactive JavaScript visualizations.
-
-
 ```{r plotly, echo =TRUE, fig.height = 4, fig.width = 8}
 library(plotly)
 ggplotly(p_rgn)
 
 ```
 
-### Create interactive time series with `dygraph()`
-
+## Create interactive time series with `dygraph()`
 Another htmlwidget plotting library written more specifically for time series data is [`dygraphs`](https://rstudio.github.io/dygraphs). Unlike the ggplot2 data input, a series is expected in _wide_ (not tidy _long_) format. So we use tidyr's `pivot_wider()` first.
 
 ```{r, modify table, echo=TRUE, fig.height = 4, fig.width = 6}
@@ -757,4 +755,4 @@ dyRangeSelector()
 
 
 
-## Further reading:
+# Further reading:
