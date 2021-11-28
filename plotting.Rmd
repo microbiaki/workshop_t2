@@ -35,10 +35,10 @@ opts_chunk$set(echo=FALSE,
 ```
 
 # Explore different types of plots in ggplot2
-ggplot2 is an R package for creating graphics based on The Grammar of Graphics^[Leland Wilkinson. The Grammar of Graphics (Statistics and Computing) 2nd Edition]. The Grammar of Graphics is a language for talking about the different parts of a plot, and allow you to build plots creatively and iterively.
+ggplot2 is an R package for creating graphics based on The Grammar of Graphics^[Leland Wilkinson. The Grammar of Graphics (Statistics and Computing) 2nd Edition]. The Grammar of Graphics is a language for talking about the different parts of a plot, and allow you to build plots creatively and iterively. The following material was developed by Maria Pachiadaki, Sarah K. Hu, Brett Longworth and David Geller.
 
-## Required packages
-Make sure that you have the following packages installed:
+## R version and required packages
+The demonstration material was developed and tested in R 4.1.0. It requires the following packages:
 
 `palmerpenguins`
 
@@ -55,6 +55,8 @@ Make sure that you have the following packages installed:
 `cowplot`
 
 `patchwork`
+
+`viridis`
 
 
 ## Dataset
@@ -600,13 +602,11 @@ library(patchwork)
 cowplot::plot_grid(horizontal_bar,
           violin_mod,
           ncol = 1)
-# Add "labels = c("A", "B")" to cowplot function
-# ?plot_grid()
 
 # Patchwork
 horizontal_bar + violin_mod + patchwork::plot_layout(ncol = 1)
 ```
-
+> Challenge: add labels ("A" and "B") to cowplot function
 
 ## Saving plots
 [`ggsave()`](https://ggplot2.tidyverse.org/reference/ggsave.html) is a function for saving the last plot displayed. It  guesses the type of graphics device from the extension. 
@@ -630,7 +630,7 @@ dev.off()
 
 
 ## Dataset
-The following material is from XXX
+The following material is from the ["Reproducible Reporting with R (R3) for marine ecological indicators" Webminar](https://noaa-iea.github.io/r3-train/visualize.html) designed and instructed by Brett Best, who gracefully allowed us to use it.
 
 ### Get URL to CSV
 Visit the ERDDAP server [https://oceanview.pfeg.noaa.gov/erddap](https://oceanview.pfeg.noaa.gov/erddap) and do a *Full Text Search for Datasets* using "cciea" in the text box before clicking **Search**. These are all the California Current IEA datasets.
@@ -756,3 +756,5 @@ dyRangeSelector()
 ```
 
 
+
+## Further reading:
