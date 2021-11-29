@@ -165,7 +165,7 @@ In the exploration of the `palmerpenguins` data, we started with a simple plot a
 
 Starting with the first plot, we started by using the `ggplot()` function to create a ggplot object. As parameters, we told `ggplot()` we wanted to use `penguins` as data for the plot, and used the `aes()` function to define how we wanted to map the penguin data to the plot *aesthetics*. We mapped `flipper_length_mm` onto the x axis and `body_mass_g` onto the y axis.
 
-Next, we have to tell ggplot how we want to display the data. *Geoms* take mapped data and make it visible on the plot. `geom_point()` is a geom that (you guessed it) plots points. Note that we've added our first *layer* to the plot by sending the object created by `ggplot()` to `geom_point()` using the `+`. Why not use the pipe (`%>%`)? Ggplot was developed before the magrittr pipe, so `+` it is. This has made a lot of people very angry and been widely regarded as a bad move.
+Next, we have to tell ggplot how we want to display the data. *Geoms* take mapped data and make it visible on the plot. `geom_point()` is a geom that (you guessed it) plots points. Note that we've added our first *layer* to the plot by sending the object created by `ggplot()` to `geom_point()` using the `+`. Why not use the pipe (`%>%`)? Ggplot was developed before the magrittr pipe, so `+` it is. This has made a lot of people very angry and been widely regarded as a bad move^[Douglas Adams, Hitchhiker's Guide to the Galaxy].
 
 Layers are functions, so they take parameters that control what they do. For instance, when we used `geom_point()` as a layer to display available plot symbols above, we used this line:
 
@@ -529,14 +529,13 @@ You can add the individual points using `geom_jitter()`:
 ```{r plot body flipper length distribution in the different species add ind observations, echo =TRUE}
 ggplot(na.omit(penguins), aes(x=species, y=flipper_length_mm, fill=sex))+
   geom_boxplot()+
-  geom_jitter(color="black", size=0.4, alpha=0.9) + 
+  geom_point(position = position_jitterdodge(), size=0.4, alpha=0.9) + 
   theme_bw()+
   labs(x = "Species", y = "Flipper length (mm)")+
   theme(axis.text.x = element_text(color = "black", size = 12),
         axis.text.y = element_text(color = "black", size = 12),
         axis.title.x = element_text(color = "black", face = "bold", size = 14),
         axis.title.y = element_text(color = "black", face = "bold", size = 14))
-
 ```
 
 ## Violin plots
