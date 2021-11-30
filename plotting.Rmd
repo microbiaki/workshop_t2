@@ -755,3 +755,13 @@ dyRangeSelector()
 
 
 # Further reading:
+- [Cédric's beautify plots](https://github.com/z3tt/ggplot-courses)
+- [Top 50 ggplot visualizations](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html#Correlogram)
+- [ZevRoss Beautiful plotting in R](http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/)
+- [Color brewer](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3)
+- [Sarah's R ventures](https://shu251.github.io/r-ventures/#introduction)
+- [Riffomonas Code Club videos](https://riffomonas.org/code_club/)
+- [BVCN](https://github.com/biovcnet/biovcnet.github.io/wiki/TOPIC%3A-R). Specifically lesson 8b - on how to do PCA and PCoA in R (https://youtu.be/lSgwJBPW88k)
+- [Keyboard shortcuts](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts)
+- Link to Hu et al. 2021- all code associated with paper, [includes example PCA, bar plots, heat maps, and more](https://shu251.github.io/protist-gordaridge-2021/)
+
