@@ -79,8 +79,8 @@ As we can see from the summary table three different species of penguins were re
 ![alt penguins](figures-images/penguins.png)
 
 
-## Scatterplot
-Let's explore if there is a correlation between the **body mass** of the penguins and the **flipper length** of the penguins:
+## Scatterplots
+Let's explore if there is a correlation between the **body mass** of the penguins and the **flipper length** of the penguins using [`geom_point()`](https://ggplot2.tidyverse.org/reference/geom_point.html):
 ```{r plot body mass vs flipper length, echo =TRUE}
 library(tidyverse) # load the tidyverse package (contains ggplot2)
 
@@ -89,7 +89,7 @@ ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g))+
   geom_point()
 ```
 
-Let's add the **trend line** (fitting linear model):
+Let's add the **trend line** (fitting linear model) using [`geom_smooth()`](https://ggplot2.tidyverse.org/reference/geom_smooth.html):
 ```{r plot body mass vs flipper length and trendline, echo =TRUE}
 ggplot(penguins, aes(x=flipper_length_mm,y=body_mass_g))+
   geom_point()+ 
@@ -97,7 +97,7 @@ ggplot(penguins, aes(x=flipper_length_mm,y=body_mass_g))+
   geom_smooth(method="lm") 
 ```
 
-Let's add a trend line together with the equation and the R^2^ value:
+Let's add a trend line together with the **equation** and the **R^2^ value** using the package `ggpubr`:
 ```{r plot body mass vs flipper length and trendline and equation, echo =TRUE}
 
 library(ggpubr) #package the facilitates the display of the equation
@@ -173,9 +173,11 @@ Layers are functions, so they take parameters that control what they do. For ins
 geom_point(aes(shape = shape), size = 5, fill = 'red')
 ```
 
-This uses `aes()` to map `shape` from the data to the shape displayed. `size = 5` and `fill = 'red'` define the size and fill color of all points plotted. Assigning a constant to an aesthetic sets it for the entire geom, while mapping data to an aesthetic with `aes()` allows it to vary with the data mapped.
+This uses `aes()` to map `shape` from the data to the shape displayed. `size = 5` and `fill = 'red'` define the size and fill color of all points plotted. Assigning a constant to an aesthetic sets it for the entire geom, while mapping data to an aesthetic with `aes()` allows it to vary with the data mapped. More details on **aesthetics** specifications can be found [here](https://ggplot2.tidyverse.org/articles/ggplot2-specs.html)
 
 Each additional layer adds something to the plot or modifies the plot defaults. We can add layers to add additional plots with the same or different data mapped to the plot aesthetics, modify the plot scales, change the coordinate system of the axes, change the theme of the plot, and break the plot into subplots by a categorical variable, which we'll look at next.
+
+
 
 ## Faceting
 Faceting is the process that split the chart window in several small parts (a grid), and display a similar chart in each section. Each section usually shows the same graph for a specific group of the dataset. We will be working with `facet_wrap()`:
@@ -200,7 +202,7 @@ ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g, color=species))+
 
 ## Themes
 There are built in-ggplot [themes](https://ggplot2.tidyverse.org/reference/ggtheme.html), as well as [theme packages](https://r-charts.com/ggplot2/themes/). There is a long list of cosmetic changes you can make with [theme()](https://ggplot2.tidyverse.org/reference/theme.html).
-Let's try changing themes in other type of plot, histograms using `geom_histogram()`. Let's plot the distribution of the flipper length for each species. We will use my favourite theme, `them_bw()`:
+Let's try changing themes in other type of plot, histograms using `geom_histogram()`. Let's plot the distribution of the flipper length for each species. We will use Maria's favourite theme, `them_bw()`:
 ```{r histogram bw_theme, echo =TRUE}
 #use fill to color the different species. What would happen if you used color instead?
 ggplot(penguins, aes(flipper_length_mm, fill=species)) + 
@@ -502,6 +504,8 @@ ggplot(penguins,aes(x=island, fill=species))+
   coord_flip()
 ```
 
+For axis scales adjustments and transformations, please see these [examples](http://www.sthda.com/english/wiki/ggplot2-axis-scales-and-transformations).
+
 ## Boxplots
 Let visualize the distribution of flipper length in the different species and sexes using the function `geom_boxplot()` to create a [box and whiskers plot](https://ggplot2.tidyverse.org/reference/geom_boxplot.html):
 ```{r plot flipper length distribution in the different species and sexes, echo =TRUE}
@@ -605,10 +609,11 @@ cowplot::plot_grid(horizontal_bar,
 # Patchwork
 horizontal_bar + violin_mod + patchwork::plot_layout(ncol = 1)
 ```
-> Challenge: add labels ("A" and "B") to cowplot function
+
+>Challenge: add labels ("A" and "B") to cowplot function
 
 ## Saving plots
-[`ggsave()`](https://ggplot2.tidyverse.org/reference/ggsave.html) is a function for saving the last plot displayed. It  guesses the type of graphics device from the extension. 
+[`ggsave()`](https://ggplot2.tidyverse.org/reference/ggsave.html) is a function for saving the *last* plot displayed. It  guesses the type of graphics device from the *extension*. 
 ```{r, ggsave, echo=TRUE}
 #make directory called "plots"
 dir.create("plots", showWarnings = F)
@@ -756,12 +761,14 @@ dyRangeSelector()
 
 # Further reading:
 - [Cédric's beautify plots](https://github.com/z3tt/ggplot-courses)
+- [Graphs with ggplot2](http://www.cookbook-r.com/Graphs/)
+- [Dual Y axis](https://www.r-graph-gallery.com/line-chart-dual-Y-axis-ggplot2.html)
 - [Top 50 ggplot visualizations](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html#Correlogram)
 - [ZevRoss Beautiful plotting in R](http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/)
 - [Color brewer](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3)
 - [Sarah's R ventures](https://shu251.github.io/r-ventures/#introduction)
 - [Riffomonas Code Club videos](https://riffomonas.org/code_club/)
 - [BVCN](https://github.com/biovcnet/biovcnet.github.io/wiki/TOPIC%3A-R). Specifically lesson 8b - on how to do PCA and PCoA in R (https://youtu.be/lSgwJBPW88k)
-- [Keyboard shortcuts](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts)
 - Link to Hu et al. 2021- all code associated with paper, [includes example PCA, bar plots, heat maps, and more](https://shu251.github.io/protist-gordaridge-2021/)
+- [Keyboard shortcuts](https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts)
 
