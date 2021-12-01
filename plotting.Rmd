@@ -704,8 +704,7 @@ d_rgn <- d %>%
   # pivot longer
   pivot_longer(-time) %>% 
   # mutate region by stripping other
-  mutate(
-    region = name %>% 
+  mutate(region = name %>% 
       str_replace("total_fisheries_revenue_", "") %>% 
       str_to_upper()) %>% 
   # filter for not NA
@@ -746,16 +745,22 @@ Another htmlwidget plotting library written more specifically for time series da
 ```{r, modify table, echo=TRUE, fig.height = 4, fig.width = 6}
 library(dygraphs)
 d_rgn_wide <- d_rgn %>% 
-mutate(Year = time) %>% 
-select(Year, region, value) %>% 
-pivot_wider(names_from  = region,values_from = value)
+  rename(Year = time) %>%
+  pivot_wider(names_from  = region,values_from = value)
 datatable(d_rgn_wide)
 ```
 
 
 ```{r, dygraphs, echo=TRUE, fig.height = 4, fig.width = 8}
 d_rgn_wide %>% 
-dygraph() %>% 
+  dygraph() %>% 
+  dyRangeSelector()
+```
+
+```{r, dygraphs stacked, echo=TRUE, fig.height = 4, fig.width = 8}
+d_rgn_wide %>%
+  dygraph() %>%
+  dyOptions(stackedGraph=TRUE)%>%
 dyRangeSelector()
 ```
 The example above is rather simple since we used a table that contained time as a numeric variable. If time is a date variable the process is a bit more involved. Information on how to work with dates and how to to get your data at the `date` format can be found [here](https://www.r-graph-gallery.com/316-possible-inputs-for-the-dygraphs-library.html).
