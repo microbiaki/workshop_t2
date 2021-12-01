@@ -737,6 +737,8 @@ library(plotly)
 ggplotly(p_rgn)
 
 ```
+More information on plotly can be found on ["Improving plotly"](https://plotly-r.com/improving-ggplotly.html).
+
 
 ## Create interactive time series with `dygraph()`
 Another htmlwidget plotting library written more specifically for time series data is [`dygraphs`](https://rstudio.github.io/dygraphs). Unlike the ggplot2 data input, a series is expected in _wide_ (not tidy _long_) format. So we use tidyr's `pivot_wider()` first.
@@ -756,7 +758,7 @@ d_rgn_wide %>%
 dygraph() %>% 
 dyRangeSelector()
 ```
-
+The example above is rather simple since we used a table that contained time as a numeric variable. If time is a date variable the process is a bit more involved. Information on how to work with dates and how to to get your data at the `date` format can be found [here](https://www.r-graph-gallery.com/316-possible-inputs-for-the-dygraphs-library.html).
 
 
 # Further reading:
