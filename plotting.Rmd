@@ -74,6 +74,12 @@ And summarize the penguins table using the `summary` function:
 ```{r summarize penguins, echo =TRUE}
 summary(penguins)  #summarize data
 ```
+`Skimr` is another useful package to summarize data tables
+```{r skimr penguins, echo =TRUE}
+#install skimr package
+library(skimr)
+skim(penguins)  #summarize data
+```
 
 As we can see from the summary table three different species of penguins were recorded in three different islands.
 ![alt penguins](figures-images/penguins.png)
@@ -612,7 +618,10 @@ ggplot(na.omit(penguins), aes(x = species, y = flipper_length_mm, fill = sex)) +
   theme(axis.text.x = element_text(color = "black", size = 12), 
         axis.text.y = element_text(color = "black", size = 12), 
         axis.title.x = element_text(color = "black", size = 14), 
-        axis.title.y = element_text(color = "black", face = "bold", size = 14))
+        axis.title.y = element_text(color = "black", face = "bold", size = 14),
+        #remove internal grid
+        panel.grid = element_blank())
+
 ```
 
 ## Combining plots
@@ -663,8 +672,13 @@ horizontal_bar + violin_mod + patchwork::plot_layout(ncol = 1)
 #make directory called "plots"
 dir.create("plots", showWarnings = F)
 
-#and save the last plot, adjust width and height
+#and save the last plot as png, adjust width and height
 ggsave("plots/combined.png", width = 15, height =10, units = "cm")
+```
+
+```{r, ggsave svg, echo=TRUE}
+#save the last plot as svg, adjust width and height
+ggsave("plots/combined.svg", width = 15, height =10, units = "cm")
 ```
 
 Plots can also be saved with `print()`
