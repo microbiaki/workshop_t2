@@ -218,13 +218,6 @@ ggplot(penguins, aes(flipper_length_mm, fill=species)) +
   theme_bw()
 
 ```
-
-And Sarah's favorite theme `theme_linedraw()`:
-```{r histogram linedraw theme, echo =TRUE}
-ggplot(penguins, aes(x = flipper_length_mm,fill = species)) +
-  geom_histogram(alpha = 0.8, position = "identity")+
-  theme_linedraw()
-```
   
 `theme_void()` is another build-in theme:
 ```{r histogram void theme, echo =TRUE}
